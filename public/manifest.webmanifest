@@ -1,0 +1,38 @@
+{
+  "id": "./",
+  "name": "Grok Course Trainer",
+  "short_name": "Grok course",
+  "description": "Lessons, flashcards, quizzes, and games from the Grok YouTube channel.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#e4eeef",
+  "theme_color": "#0d4a44",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    { "name": "Lessons", "url": "./#/lessons" },
+    { "name": "Flashcards", "url": "./#/cards" },
+    { "name": "Quizzes", "url": "./#/quiz" },
+    { "name": "Games", "url": "./#/play" }
+  ]
+}
