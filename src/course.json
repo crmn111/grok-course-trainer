@@ -1,126 +1,182 @@
 {
-  "version": 1,
-  "generated": "2026-11-25 (Europe/Malta)",
-  "source": "https://www.youtube.com/@Grok transcripts via curriculum.md",
-  "canvas": "https://cursor.com/canvas/store-f8b88133-e94b-4e2f-8da2-bc1db08e3b1a/c84b09c7-c204-4ffe-aeac-d7964bae4680",
-  "howToExtend": "Append a lesson object to lessons (title, videos, summary, concepts, flashcards, quiz) and add new video ids to videos; quiz options list the correct answer first (the app shuffles).",
-  "videos": {
-    "F1_0Lkp16Rc": {
-      "title": "Introducing Grok Bot",
-      "duration": "1:47",
-      "url": "https://www.youtube.com/watch?v=F1_0Lkp16Rc"
-    },
-    "CODaDnHwe2M": {
-      "title": "Grok Bot 101",
-      "duration": "57:45",
-      "url": "https://www.youtube.com/watch?v=CODaDnHwe2M"
-    },
-    "i-7F2EpQOhc": {
-      "title": "What's new in Grok Bot #1",
-      "duration": "45:12",
-      "url": "https://www.youtube.com/watch?v=i-7F2EpQOhc"
-    },
-    "lQB3kZZZYss": {
-      "title": "What's New in Grok Bot #2",
-      "duration": "41:38",
-      "url": "https://www.youtube.com/watch?v=lQB3kZZZYss"
-    },
-    "NhrXdX_93Hc": {
-      "title": "Grok Bot for Admins",
-      "duration": "29:35",
-      "url": "https://www.youtube.com/watch?v=NhrXdX_93Hc"
-    },
-    "FNQkRPR4h2Y": {
-      "title": "Meet Team Bots",
-      "duration": "50:09",
-      "url": "https://www.youtube.com/watch?v=FNQkRPR4h2Y"
-    },
-    "aEK0bvZDNFg": {
-      "title": "Grok Bot 201",
-      "duration": "58:13",
-      "url": "https://www.youtube.com/watch?v=aEK0bvZDNFg"
-    },
-    "lpi-9F5KJJo": {
-      "title": "Ship Code at Scale with Grok Bot and Cursor",
-      "duration": "57:15",
-      "url": "https://www.youtube.com/watch?v=lpi-9F5KJJo"
-    },
-    "qCFUktiL0NU": {
-      "title": "How a Series A Startup Runs on Grok Bot",
-      "duration": "57:53",
-      "url": "https://www.youtube.com/watch?v=qCFUktiL0NU"
-    },
-    "VSaeKaC2Tck": {
-      "title": "Grok Bot for Marketing",
-      "duration": "57:37",
-      "url": "https://www.youtube.com/watch?v=VSaeKaC2Tck"
-    },
-    "zupqr-rApp4": {
-      "title": "Grok Bot for Sales",
-      "duration": "48:52",
-      "url": "https://www.youtube.com/watch?v=zupqr-rApp4"
-    },
-    "FFOZAl7wihE": {
-      "title": "Grok Bot X Clay",
-      "duration": "59:22",
-      "url": "https://www.youtube.com/watch?v=FFOZAl7wihE"
-    },
-    "jcKcAfJtTlk": {
-      "title": "Grok Bot for Enterprise Teams",
-      "duration": "55:16",
-      "url": "https://www.youtube.com/watch?v=jcKcAfJtTlk"
-    },
-    "AdxoMFFmTE0": {
-      "title": "Grok Bot for Financial Services",
-      "duration": "58:31",
-      "url": "https://www.youtube.com/watch?v=AdxoMFFmTE0"
-    },
-    "91J3eaBH6no": {
-      "title": "How Coinbase uses Grok Bot",
-      "duration": "49:51",
-      "url": "https://www.youtube.com/watch?v=91J3eaBH6no"
-    },
-    "rcwwIEmfcjk": {
-      "title": "SpaceXSI x Bain: the SI SDLC",
-      "duration": "43:45",
-      "url": "https://www.youtube.com/watch?v=rcwwIEmfcjk"
-    },
-    "_apu1u-RuI8": {
-      "title": "SpaceXSI for Higher Education",
-      "duration": "58:28",
-      "url": "https://www.youtube.com/watch?v=_apu1u-RuI8"
-    },
-    "mykpZ18bkGk": {
-      "title": "SpaceXSI for Students",
-      "duration": "43:45",
-      "url": "https://www.youtube.com/watch?v=mykpZ18bkGk"
-    },
-    "W34FDMm1nCk": {
-      "title": "Introducing Grok Voice Agent Builder",
-      "duration": "0:46",
-      "url": "https://www.youtube.com/watch?v=W34FDMm1nCk"
-    },
-    "SIfDV2JjLL4": {
-      "title": "Introducing Grok Imagine 1.5 Video",
-      "duration": "0:37",
-      "url": "https://www.youtube.com/watch?v=SIfDV2JjLL4"
-    }
-  },
-  "lessons": [
+  "version": 2,
+  "generated": "2026-11-25",
+  "source": "Official Grok YouTube channel. Each video uses its transcript. Study items from the earlier lesson file are kept only on the video they came from.",
+  "howToExtend": "Append one object to videos. Use the YouTube id, title, url, duration, and lengthSeconds. Set watchOnly true when the transcript has no lesson. Otherwise add a summary, concepts, flashcards, and quiz from that video's transcript. For a video of about 30 minutes or more, add chapters with a title, approximate seconds, and concepts. Point a new scenario at the video id.",
+  "videos": [
     {
-      "lesson": 1,
-      "title": "What Grok Bot really is",
-      "videos": [
-        "F1_0Lkp16Rc",
-        "CODaDnHwe2M"
+      "id": "F1_0Lkp16Rc",
+      "order": 1,
+      "title": "Introducing Grok Bot",
+      "url": "https://www.youtube.com/watch?v=F1_0Lkp16Rc",
+      "duration": "1:47",
+      "lengthSeconds": 107,
+      "published": "2026-08-25",
+      "watchOnly": false,
+      "summary": "A short film of people using Grok Bot as a co-worker that does the work, on its own computer, while they keep working.",
+      "concepts": [
+        "Like bringing on a co-worker",
+        "An AI doing partner, not only a thinking partner",
+        "The output shows up outside the chat",
+        "It works on another instance, not your computer",
+        "It can watch you work and turn that into a workflow"
       ],
-      "summary": "Grok Bot is a teammate with its own cloud computer that produces real work, not just chat answers.",
+      "chapters": [],
+      "flashcards": [
+        {
+          "front": "What did one user compare onboarding to?",
+          "back": "Bringing on a co-worker. They said there wasn't anything to learn."
+        },
+        {
+          "front": "Thinking partner vs doing partner",
+          "back": "A user had always had an AI thinking partner, but not an AI doing partner that actually does things."
+        },
+        {
+          "front": "Where does the work show up?",
+          "back": "Somewhere other than the chat. The user said that with almost every other AI product the output was in the chat, and with bot the output is somewhere else."
+        },
+        {
+          "front": "Can you keep working while bot works?",
+          "back": "Yes. It is not using your computer, so you can keep doing work in parallel while bot works on another instance."
+        },
+        {
+          "front": "Why the computer instance mattered",
+          "back": "It has the browser open and understands how the site actually functions."
+        },
+        {
+          "front": "Learning a workflow without a write-up",
+          "back": "Bot can watch how you work, record what you are doing, and summarize that into a real workflow."
+        },
+        {
+          "front": "What happened with the NDAs?",
+          "back": "The user said to just go off and send them, and all of them had sent out as they had said."
+        },
+        {
+          "front": "What did the Figma agent do in the meeting?",
+          "back": "It held the discovery notes and created a slide deck at the end of the call."
+        }
+      ],
+      "quiz": [
+        {
+          "question": "How did one user contrast Grok Bot with the AI they already had?",
+          "correct": "They had a thinking partner, and bot was a doing partner",
+          "wrong": [
+            "It was only a faster search box",
+            "It only made music",
+            "It replaced their entire laptop"
+          ],
+          "why": "The intro says: I've always had an AI thinking partner, but I've never had an AI doing partner that actually does things."
+        },
+        {
+          "question": "Where does that user say bot's output shows up?",
+          "correct": "Somewhere other than the chat",
+          "wrong": [
+            "Only inside the chat window",
+            "Only as a phone call",
+            "Only in a spreadsheet they paste in"
+          ],
+          "why": "They said that for almost every other AI product the output is in the chat, and with bot the output is somewhere else."
+        },
+        {
+          "question": "Why can you keep working while bot works?",
+          "correct": "It works on another instance, not on your computer",
+          "wrong": [
+            "It only runs after you close the laptop",
+            "It pauses whenever you type",
+            "It needs your keyboard the whole time"
+          ],
+          "why": "The intro says it is not using your computer, so you can keep doing work in parallel while bot works on another instance."
+        },
+        {
+          "question": "What did the user tell bot to do with the NDAs?",
+          "correct": "Just go off and send them",
+          "wrong": [
+            "Draft one and wait for a review meeting",
+            "Store them in a vault",
+            "Send a single test message"
+          ],
+          "why": "They said it all started with email: just go off and send them, and all of them had sent out as they had said."
+        },
+        {
+          "question": "What did the Figma agent do with the discovery notes?",
+          "correct": "Held them and created a slide deck at the end of the call",
+          "wrong": [
+            "Emailed the notes to the client",
+            "Turned the notes into production code",
+            "Deleted the notes when the call ended"
+          ],
+          "why": "The user said a Figma agent holds the discovery notes and creates a slide deck at the end of the call."
+        }
+      ]
+    },
+    {
+      "id": "CODaDnHwe2M",
+      "order": 2,
+      "title": "Grok Bot 101",
+      "url": "https://www.youtube.com/watch?v=CODaDnHwe2M",
+      "duration": "57:45",
+      "lengthSeconds": 3465,
+      "published": "2026-11-17",
+      "watchOnly": false,
+      "summary": "Chloe and Cliff's getting-started session: treat Grok Bot as a teammate, give it one job, and use the shared cloud computer, memory, rules, and the vault.",
       "concepts": [
         "Teammate, not a one-shot chatbot",
         "The work shows up outside the chat",
         "Its own computer in the cloud",
         "Learns by watching or recording you",
-        "Push it on complex workflows"
+        "Push it on complex workflows",
+        "One job per bot",
+        "Connect the tools the role needs",
+        "Shared cloud computer",
+        "Brain dump first"
+      ],
+      "chapters": [
+        {
+          "title": "A teammate for real work",
+          "seconds": 94,
+          "concepts": [
+            "Teammate, not a one-shot chatbot",
+            "The work shows up outside the chat",
+            "Its own computer in the cloud",
+            "Learns by watching or recording you",
+            "Push it on complex workflows"
+          ]
+        },
+        {
+          "title": "One job, connections, and a brain dump",
+          "seconds": 607,
+          "concepts": [
+            "One job per bot",
+            "Connect the tools the role needs",
+            "Shared cloud computer",
+            "Brain dump first",
+            "Steer by chatting",
+            "Start with one primary bot"
+          ]
+        },
+        {
+          "title": "One shared computer and memory",
+          "seconds": 1218,
+          "concepts": [
+            "One shared computer",
+            "Specialize where a peer would",
+            "Bot-to-bot handoffs",
+            "Persistent memory and the right-hand panel",
+            "Marketplace, recording, and pages"
+          ]
+        },
+        {
+          "title": "Rules, the vault, and sharing",
+          "seconds": 2615,
+          "concepts": [
+            "Brief like a new teammate",
+            "Rules: always allow vs always ask",
+            "The vault",
+            "Templates and the marketplace",
+            "Team bots: private chats, shared memory",
+            "One usage pool"
+          ]
+        }
       ],
       "flashcards": [
         {
@@ -128,36 +184,48 @@
           "back": "A teammate you message like a colleague, not a one-shot chatbot."
         },
         {
+          "front": "Chloe's three getting-started parts",
+          "back": "One job per bot, connect the tools that job needs, use the shared cloud computer."
+        },
+        {
+          "front": "Does every bot get its own computer?",
+          "back": "No: you have one shared Grok Bot computer."
+        },
+        {
+          "front": "Weak vs strong brief",
+          "back": "Not 'help me with my inbox' but 'every weekday morning do X, Y and Z.'"
+        },
+        {
           "front": "Good first jobs",
           "back": "Real work already on your plate: a deck, a campaign, tasks you'd hand a teammate."
+        },
+        {
+          "front": "'One job' means ...",
+          "back": "A specialized role, not a one-off task."
+        },
+        {
+          "front": "What the shared computer enables",
+          "back": "Bots talk to each other, share sign-ins, and reuse tasks taught to another bot."
+        },
+        {
+          "front": "Rules",
+          "back": "Controls on behavior, e.g. check with me before every email it sends."
         },
         {
           "front": "Who decides when the work is done?",
           "back": "You: approve it, edit it, or send it back."
         },
         {
-          "front": "Where does Bot's work show up?",
-          "back": "Outside the chat: an email sent, a Figma deck built, a session on a real site."
+          "front": "How to create a bot",
+          "back": "Plus sign, top left, give it a name."
         },
         {
-          "front": "'AI thinking partner' vs ...",
-          "back": "'AI doing partner', how an intro-film user described Grok Bot."
+          "front": "When to make a specialist bot",
+          "back": "When you'd have a peer specialize in that area."
         },
         {
-          "front": "Where does Grok Bot run?",
-          "back": "On its own computer in the cloud, not your laptop; it keeps going after you close it."
-        },
-        {
-          "front": "How many computers do your bots use?",
-          "back": "Your bots share one cloud computer."
-        },
-        {
-          "front": "Teach a multi-step task without words",
-          "back": "Take control of the bot's computer or record yourself doing it."
-        },
-        {
-          "front": "Chloe's advice on what to ask",
-          "back": "Push it on complex workflows you'd give a colleague, not tiny prompts."
+          "front": "'Always allow' vs 'always ask'",
+          "back": "How you loosen or tighten the agent without rewriting the brief."
         }
       ],
       "quiz": [
@@ -171,111 +239,6 @@
           "why": "Bot has its own computer in the cloud, so it keeps going after you close the laptop."
         },
         {
-          "question": "What's the simplest getting-started mental model?",
-          "correct": "Treat it like a teammate and give it real work",
-          "wrong": [
-            "Write a long system prompt and pick a model",
-            "Use it only for code inside Cursor"
-          ],
-          "why": "Message it the way you'd ask a colleague."
-        },
-        {
-          "question": "How did an intro-film user describe Grok Bot?",
-          "correct": "An 'AI doing partner'",
-          "wrong": [
-            "An 'AI search engine'",
-            "An 'AI note taker'"
-          ],
-          "why": "They'd had an AI thinking partner, but never an AI doing partner."
-        },
-        {
-          "question": "How can you teach Bot a multi-step task without describing it?",
-          "correct": "Record yourself doing it on the bot's computer",
-          "wrong": [
-            "Email it a PDF manual only",
-            "You can't; it must be typed"
-          ],
-          "why": "Bot can watch, record and summarize how you work into a workflow."
-        },
-        {
-          "question": "What kind of requests does Chloe say to push it on?",
-          "correct": "Complex workflows you'd ask a colleague to do",
-          "wrong": [
-            "Tiny one-line prompts",
-            "Only trivia questions"
-          ],
-          "why": "Her advice: complex real workflows, not tiny prompts."
-        },
-        {
-          "question": "Can you keep working while Bot works?",
-          "correct": "Yes, it works on its own cloud computer",
-          "wrong": [
-            "No, it takes over your laptop",
-            "Only if you keep the chat open"
-          ],
-          "why": "It's not using your laptop, so you can keep working."
-        }
-      ]
-    },
-    {
-      "lesson": 2,
-      "title": "Start a bot the 101 way: one job, connections, and a brain dump",
-      "videos": [
-        "CODaDnHwe2M"
-      ],
-      "summary": "Give each bot one job, connect the tools that job needs, and start with a brain dump instead of a perfect prompt.",
-      "concepts": [
-        "One job per bot",
-        "Connect the tools the role needs",
-        "Shared cloud computer",
-        "Brain dump first",
-        "Steer by chatting",
-        "Start with one primary bot"
-      ],
-      "flashcards": [
-        {
-          "front": "Chloe's three getting-started parts",
-          "back": "One job per bot, connect the tools that job needs, use the shared cloud computer."
-        },
-        {
-          "front": "'One job' means ...",
-          "back": "A specialized role, not a one-off task."
-        },
-        {
-          "front": "How to create a bot",
-          "back": "Plus sign, top left, give it a name."
-        },
-        {
-          "front": "Flylo",
-          "back": "The 101 demo bot for a new regional airline."
-        },
-        {
-          "front": "Are chats isolated silos?",
-          "back": "No: a new bot infers context from its title and how you've used other bots."
-        },
-        {
-          "front": "Best first move when unsure",
-          "back": "A brain dump: throw lots of ideas at it (voice is fine) and let it help structure."
-        },
-        {
-          "front": "Why a brain dump works",
-          "back": "Models now handle ambiguity well, so you don't need the perfect first prompt."
-        },
-        {
-          "front": "Bot is slow or off track?",
-          "back": "Just ask in the chat ('do you have the launch notes yet?')."
-        },
-        {
-          "front": "Before splitting into specialists ...",
-          "back": "Start with one primary bot as a sounding board."
-        },
-        {
-          "front": "Where can you message bots?",
-          "back": "From the desktop app or the mobile app."
-        }
-      ],
-      "quiz": [
-        {
           "question": "Which three parts does Chloe list first?",
           "correct": "One job per bot, connect its tools, use the shared cloud computer",
           "wrong": [
@@ -283,6 +246,33 @@
             "Hire an admin, install Slack, turn off memory"
           ],
           "why": "That's the 101 getting-started model."
+        },
+        {
+          "question": "Do your bots each have their own computer?",
+          "correct": "No, they share one cloud computer",
+          "wrong": [
+            "Yes, one VM per bot",
+            "Only team bots have computers"
+          ],
+          "why": "The shared computer is why they can talk to each other and share logins."
+        },
+        {
+          "question": "Can you see a teammate's private chats with a shared team bot?",
+          "correct": "No, they stay private, though the bot keeps memory across you",
+          "wrong": [
+            "Yes, always",
+            "Only if you're an admin"
+          ],
+          "why": "Chats are visible only in shared Slack or Teams channels."
+        },
+        {
+          "question": "What's the simplest getting-started mental model?",
+          "correct": "Treat it like a teammate and give it real work",
+          "wrong": [
+            "Write a long system prompt and pick a model",
+            "Use it only for code inside Cursor"
+          ],
+          "why": "Message it the way you'd ask a colleague."
         },
         {
           "question": "You're unsure how to start with a new bot. First move?",
@@ -294,110 +284,6 @@
           "why": "Models handle ambiguity well, so dump ideas and let it structure them."
         },
         {
-          "question": "What did the new Flylo bot do right away?",
-          "correct": "Inferred context from its title and your other bots",
-          "wrong": [
-            "Asked for a 20-page brief",
-            "Waited for an admin to approve it"
-          ],
-          "why": "Chats are not isolated silos."
-        },
-        {
-          "question": "How do you steer a bot that's taking too long?",
-          "correct": "Ask it in the chat",
-          "wrong": [
-            "Delete and recreate it",
-            "File a support ticket"
-          ],
-          "why": "Interactivity is how you guide the work."
-        },
-        {
-          "question": "What does 'one job' mean for a bot?",
-          "correct": "A specialized role",
-          "wrong": [
-            "A single task, then delete the bot",
-            "One message per day"
-          ],
-          "why": "A specialized role, not a one-off task."
-        },
-        {
-          "question": "What's the recommended first structure?",
-          "correct": "One primary bot as a sounding board",
-          "wrong": [
-            "Many specialists immediately",
-            "No bots until you've read the docs"
-          ],
-          "why": "Ask it 'how should I structure my bots?' before splitting work."
-        }
-      ]
-    },
-    {
-      "lesson": 3,
-      "title": "One computer, many bots, and persistent memory",
-      "videos": [
-        "CODaDnHwe2M"
-      ],
-      "summary": "All your bots share one cloud computer, hand work to each other, and keep persistent memory you can inspect.",
-      "concepts": [
-        "One shared computer",
-        "Specialize where a peer would",
-        "Bot-to-bot handoffs",
-        "Persistent memory and the right-hand panel",
-        "Marketplace, recording, and pages"
-      ],
-      "flashcards": [
-        {
-          "front": "Does every bot get its own computer?",
-          "back": "No: you have one shared Grok Bot computer."
-        },
-        {
-          "front": "What the shared computer enables",
-          "back": "Bots talk to each other, share sign-ins, and reuse tasks taught to another bot."
-        },
-        {
-          "front": "When to make a specialist bot",
-          "back": "When you'd have a peer specialize in that area."
-        },
-        {
-          "front": "Shortcut to an org of bots",
-          "back": "Tell Bot the org structure you want and have it create the bots."
-        },
-        {
-          "front": "Flylo specialist bots",
-          "back": "Design, customer-support and outreach bots, created by the main bot."
-        },
-        {
-          "front": "How the design bot knew the brief",
-          "back": "The main bot handed over compacted context automatically."
-        },
-        {
-          "front": "Memory in Grok Bot",
-          "back": "Persistent, not a one-thread context window you have to manage."
-        },
-        {
-          "front": "Click the bot's name to see ...",
-          "back": "The right-hand panel: library, routines, and how it stores information."
-        },
-        {
-          "front": "Plugin marketplace icon",
-          "back": "The circle with three squares."
-        },
-        {
-          "front": "Pages (in 101)",
-          "back": "A visual, interactive way to organize work, with annotations as feedback."
-        }
-      ],
-      "quiz": [
-        {
-          "question": "Do your bots each have their own computer?",
-          "correct": "No, they share one cloud computer",
-          "wrong": [
-            "Yes, one VM per bot",
-            "Only team bots have computers"
-          ],
-          "why": "The shared computer is why they can talk to each other and share logins."
-        },
-        {
           "question": "How did the Flylo design bot get its brief?",
           "correct": "The main bot handed over context automatically",
           "wrong": [
@@ -407,111 +293,6 @@
           "why": "That's the proactive bot-to-bot pattern."
         },
         {
-          "question": "When should you create a specialist?",
-          "correct": "When you'd have a peer specialize in that area",
-          "wrong": [
-            "For every single task",
-            "Never, use one bot only"
-          ],
-          "why": "Otherwise start with one primary bot."
-        },
-        {
-          "question": "Why not spin up a disposable bot per task?",
-          "correct": "Persistent memory lets bots specialize over time",
-          "wrong": [
-            "Bots are deleted nightly",
-            "Memory only lasts one message"
-          ],
-          "why": "Shared computer, auto-compaction and file handling keep memory."
-        },
-        {
-          "question": "Where do you see a bot's library and routines?",
-          "correct": "Click its name to open the right-hand panel",
-          "wrong": [
-            "On the billing page",
-            "Only via an API"
-          ],
-          "why": "That panel is a source of truth."
-        },
-        {
-          "question": "What are pages used for in 101?",
-          "correct": "Organizing work visually, with annotations as feedback",
-          "wrong": [
-            "Billing exports only",
-            "Storing passwords"
-          ],
-          "why": "Pages are a more visual, interactive way to organize work."
-        }
-      ]
-    },
-    {
-      "lesson": 4,
-      "title": "Rules, approvals, the vault, and sharing with your team",
-      "videos": [
-        "CODaDnHwe2M"
-      ],
-      "summary": "Brief precisely, control behavior with rules, keep secrets in the vault, and share through templates and team bots.",
-      "concepts": [
-        "Brief like a new teammate",
-        "Rules: always allow vs always ask",
-        "The vault",
-        "Templates and the marketplace",
-        "Team bots: private chats, shared memory",
-        "One usage pool"
-      ],
-      "flashcards": [
-        {
-          "front": "Weak vs strong brief",
-          "back": "Not 'help me with my inbox' but 'every weekday morning do X, Y and Z.'"
-        },
-        {
-          "front": "Rules",
-          "back": "Controls on behavior, e.g. check with me before every email it sends."
-        },
-        {
-          "front": "'Always allow' vs 'always ask'",
-          "back": "How you loosen or tighten the agent without rewriting the brief."
-        },
-        {
-          "front": "The vault",
-          "back": "Encrypted storage for payment details and passwords, used when you've given permission."
-        },
-        {
-          "front": "Templates",
-          "back": "Package any bot to share it; import bots from the marketplace."
-        },
-        {
-          "front": "Why share bots?",
-          "back": "To standardize behavior across a team."
-        },
-        {
-          "front": "Team bot privacy in your own app",
-          "back": "Each person's chats stay private, but the bot keeps memory across both."
-        },
-        {
-          "front": "Team bot in a shared Slack channel",
-          "back": "People in the channel can see those chats."
-        },
-        {
-          "front": "Group chats vs team bots",
-          "back": "Group chats: personal bots talking together. Team bots: shared by several people."
-        },
-        {
-          "front": "Voice notes",
-          "back": "Kept as a transcript, can become memory, and draw from your usage pool."
-        }
-      ],
-      "quiz": [
-        {
-          "question": "Can you see a teammate's private chats with a shared team bot?",
-          "correct": "No, they stay private, though the bot keeps memory across you",
-          "wrong": [
-            "Yes, always",
-            "Only if you're an admin"
-          ],
-          "why": "Chats are visible only in shared Slack or Teams channels."
-        },
-        {
           "question": "What happens to a voice note?",
           "correct": "It's kept as a transcript, can become memory, and uses your usage pool",
           "wrong": [
@@ -519,51 +300,18 @@
             "It's billed separately"
           ],
           "why": "Everything draws down from your overall usage pool."
-        },
-        {
-          "question": "How do you make the bot check with you before sending email?",
-          "correct": "Add a rule",
-          "wrong": [
-            "Rewrite the whole brief each time",
-            "Disconnect Gmail"
-          ],
-          "why": "Rules plus always allow / always ask tune behavior."
-        },
-        {
-          "question": "What is the vault?",
-          "correct": "Encrypted storage for passwords and payment details",
-          "wrong": [
-            "A shared Slack channel",
-            "The bot's chat history"
-          ],
-          "why": "The bot uses it when you've given permission."
-        },
-        {
-          "question": "How do you standardize bots across a team?",
-          "correct": "Package a bot as a template and share it",
-          "wrong": [
-            "Copy chats by hand",
-            "Each person writes their own prompt"
-          ],
-          "why": "Templates and marketplace imports standardize behavior."
-        },
-        {
-          "question": "Which brief does Chloe favor?",
-          "correct": "'Every weekday morning, do X, Y and Z'",
-          "wrong": [
-            "'Help me with my inbox'",
-            "'Do some stuff'"
-          ],
-          "why": "Spell out the job like you would for a new teammate."
         }
       ]
     },
     {
-      "lesson": 5,
-      "title": "What's new #1: Proactive work, plugins, and team bots",
-      "videos": [
-        "i-7F2EpQOhc"
-      ],
+      "id": "i-7F2EpQOhc",
+      "order": 3,
+      "title": "What's new in Grok Bot #1",
+      "url": "https://www.youtube.com/watch?v=i-7F2EpQOhc",
+      "duration": "45:12",
+      "lengthSeconds": 2712,
+      "published": "2026-10-25",
+      "watchOnly": false,
       "summary": "Bots work proactively in the background, connect through plugins, and become team bots everyone can message.",
       "concepts": [
         "Proactive suggestions",
@@ -572,6 +320,40 @@
         "Docs and PDFs as skills",
         "Team bots in the app and Slack",
         "Roles for sensitive bots"
+      ],
+      "chapters": [
+        {
+          "title": "Proactive work",
+          "seconds": 251,
+          "concepts": [
+            "Proactive suggestions",
+            "Background checks don't use usage",
+            "Tell it which nudges you want"
+          ]
+        },
+        {
+          "title": "Team bots",
+          "seconds": 827,
+          "concepts": [
+            "Team bots in the app and Slack",
+            "Roles for sensitive bots"
+          ]
+        },
+        {
+          "title": "Plugins and source material",
+          "seconds": 1046,
+          "concepts": [
+            "Personal vs team-shared plugins",
+            "Docs and PDFs as skills"
+          ]
+        },
+        {
+          "title": "Voice",
+          "seconds": 1816,
+          "concepts": [
+            "Voice is one of the features walked through after the agenda"
+          ]
+        }
       ],
       "flashcards": [
         {
@@ -670,14 +452,18 @@
           ],
           "why": "They say most of it was built by a team bot."
         }
-      ]
+      ],
+      "legacyLesson": 5
     },
     {
-      "lesson": 6,
-      "title": "What's new #2: Bot inboxes, 1Password, and Pages",
-      "videos": [
-        "lQB3kZZZYss"
-      ],
+      "id": "lQB3kZZZYss",
+      "order": 4,
+      "title": "What's New in Grok Bot #2",
+      "url": "https://www.youtube.com/watch?v=lQB3kZZZYss",
+      "duration": "41:38",
+      "lengthSeconds": 2498,
+      "published": "2026-11-04",
+      "watchOnly": false,
       "summary": "Bots can claim their own inbox, log in via 1Password with scoped credentials, and make Pages that start private.",
       "concepts": [
         "Bot inbox",
@@ -686,6 +472,32 @@
         "1Password with domain matching",
         "Pages are private by default",
         "Ask Bot to connect anything"
+      ],
+      "chapters": [
+        {
+          "title": "Bot inboxes",
+          "seconds": 325,
+          "concepts": [
+            "Claim an inbox",
+            "Draft before send"
+          ]
+        },
+        {
+          "title": "1Password",
+          "seconds": 908,
+          "concepts": [
+            "Scoped credentials",
+            "Domain matching on the fill"
+          ]
+        },
+        {
+          "title": "Pages",
+          "seconds": 1156,
+          "concepts": [
+            "Pages start private",
+            "Find a page by title or keyword"
+          ]
+        }
       ],
       "flashcards": [
         {
@@ -784,14 +596,18 @@
           ],
           "why": "You can just ask Bot to connect."
         }
-      ]
+      ],
+      "legacyLesson": 6
     },
     {
-      "lesson": 7,
-      "title": "Grok Bot for admins: guardrails, rollout, and spend",
-      "videos": [
-        "NhrXdX_93Hc"
-      ],
+      "id": "NhrXdX_93Hc",
+      "order": 5,
+      "title": "Grok Bot for Admins",
+      "url": "https://www.youtube.com/watch?v=NhrXdX_93Hc",
+      "duration": "29:35",
+      "lengthSeconds": 1775,
+      "published": "2026-10-25",
+      "watchOnly": false,
       "summary": "Admins control which tools run, enforce reviews, roll out through groups, and cap spend.",
       "concepts": [
         "Cloud-only VM plus MCP servers",
@@ -800,6 +616,40 @@
         "SCIM pilot groups",
         "Default team bots",
         "Spend limits"
+      ],
+      "chapters": [
+        {
+          "title": "Guardrails and auto-review",
+          "seconds": 575,
+          "concepts": [
+            "Allow or block tool calls",
+            "Enforced auto-review"
+          ]
+        },
+        {
+          "title": "Exports, VMs, and retention",
+          "seconds": 899,
+          "concepts": [
+            "Auto-export of actions",
+            "Delete a VM after inactivity"
+          ]
+        },
+        {
+          "title": "Rolling out with groups",
+          "seconds": 973,
+          "concepts": [
+            "SCIM pilot groups",
+            "Default team bots"
+          ]
+        },
+        {
+          "title": "Usage and spend",
+          "seconds": 1170,
+          "concepts": [
+            "Spend limits",
+            "An admin raises credits"
+          ]
+        }
       ],
       "flashcards": [
         {
@@ -898,14 +748,18 @@
           ],
           "why": "Mentioned with force-restart and an admin API."
         }
-      ]
+      ],
+      "legacyLesson": 7
     },
     {
-      "lesson": 8,
-      "title": "Meet Team Bots: one bot the whole company can work with",
-      "videos": [
-        "FNQkRPR4h2Y"
-      ],
+      "id": "FNQkRPR4h2Y",
+      "order": 6,
+      "title": "Meet Team Bots: AI teammates your whole team can work with",
+      "url": "https://www.youtube.com/watch?v=FNQkRPR4h2Y",
+      "duration": "50:09",
+      "lengthSeconds": 3009,
+      "published": "2026-11-13",
+      "watchOnly": false,
       "summary": "A team bot owns a whole scope of work, is set up once by its managers, and keeps one-on-one DMs private.",
       "concepts": [
         "A scope of work, not a task",
@@ -914,6 +768,40 @@
         "Your usage",
         "Meetings and phone",
         "Teach by narrating; monitor the work"
+      ],
+      "chapters": [
+        {
+          "title": "What an AI teammate is",
+          "seconds": 47,
+          "concepts": [
+            "A scope of work, not one question or one task",
+            "Chat, then agents, then teammates"
+          ]
+        },
+        {
+          "title": "DMs stay private",
+          "seconds": 831,
+          "concepts": [
+            "Private DMs, shared channel chats",
+            "Your usage when you talk to the team bot"
+          ]
+        },
+        {
+          "title": "An insurance back office",
+          "seconds": 1443,
+          "concepts": [
+            "Certificate work from 30 minutes to 3 minutes",
+            "Missed calls drafted for approval in Slack"
+          ]
+        },
+        {
+          "title": "Teach it by talking",
+          "seconds": 2291,
+          "concepts": [
+            "Take over the computer and narrate",
+            "Meetings and phone"
+          ]
+        }
       ],
       "flashcards": [
         {
@@ -1012,22 +900,59 @@
           ],
           "why": "Monitoring becomes the bottleneck."
         }
-      ]
+      ],
+      "legacyLesson": 8
     },
     {
-      "lesson": 9,
-      "title": "Grok Bot 201: Skills, specialists, and how Bot relates to Cursor",
-      "videos": [
-        "aEK0bvZDNFg"
-      ],
-      "summary": "201 is about multi-bot workflows: turn videos into skills, start from marketplace bots, and hand coding to Cursor cloud agents.",
+      "id": "aEK0bvZDNFg",
+      "order": 7,
+      "title": "Grok Bot 201",
+      "url": "https://www.youtube.com/watch?v=aEK0bvZDNFg",
+      "duration": "58:13",
+      "lengthSeconds": 3493,
+      "published": "2026-11-19",
+      "watchOnly": false,
+      "summary": "Audrey and Ria's 201 session: skills and specialists, how Bot relates to Cursor, then routines, handoffs, and auditing the bots you already have.",
       "concepts": [
-        "Multi-bot workflows",
+        "From chatbots and copilots to teammates",
         "Skills from videos and articles",
-        "Message anytime; sign in on the bot's browser",
-        "Marketplace starting points",
         "Grok Bot vs Cursor",
-        "Don't overload one bot"
+        "Routines, handoffs, and approvals",
+        "Audit the bots you have"
+      ],
+      "chapters": [
+        {
+          "title": "From chatbots to teammates",
+          "seconds": 107,
+          "concepts": [
+            "Chat, then copilots, then teammates that take a task end to end",
+            "Set the direction and let the bot do the work"
+          ]
+        },
+        {
+          "title": "Skills, specialists, and Cursor",
+          "seconds": 670,
+          "concepts": [
+            "Multi-bot workflows",
+            "Skills from videos and articles",
+            "Message anytime; sign in on the bot's browser",
+            "Marketplace starting points",
+            "Grok Bot vs Cursor",
+            "Don't overload one bot"
+          ]
+        },
+        {
+          "title": "Routines, handoffs, and an audit",
+          "seconds": 1645,
+          "concepts": [
+            "Triggers and handoffs",
+            "Approvals until trusted",
+            "Owner-controlled memory",
+            "End-user authentication",
+            "Evaluate and purge",
+            "Slack triggers and permissions"
+          ]
+        }
       ],
       "flashcards": [
         {
@@ -1035,40 +960,48 @@
           "back": "101: what it can do. 201: real workflows with bots handing work to each other."
         },
         {
+          "front": "Example trigger",
+          "back": "'Starts after every meeting', handing follow-ups to the Gleaner bot via Notion."
+        },
+        {
           "front": "Learning from media",
           "back": "Give bots courses, YouTube videos and articles; they turn principles into skills."
+        },
+        {
+          "front": "New handoff: full approval?",
+          "back": "No: build the handoff first, loosen approvals once you trust it."
         },
         {
           "front": "'Straight line writing'",
           "back": "The writing skill a bot saved from YouTube video principles in the demo."
         },
         {
+          "front": "Voice settings",
+          "back": "You can set a bot's voice and speaking speed."
+        },
+        {
           "front": "Writing-skill pattern",
           "back": "Combine a writer you admire with your tone; adapt it for formal email vs casual Slack."
+        },
+        {
+          "front": "Team-bot owner",
+          "back": "Can be the only one allowed to edit its memory."
         },
         {
           "front": "Wait for the bot to finish?",
           "back": "Not needed: send your next message anytime."
         },
         {
+          "front": "Team-bot tool auth",
+          "back": "Uses each end user's personal auth (your Notion or Datadog MCP)."
+        },
+        {
           "front": "Signing a bot into LinkedIn",
           "back": "Open it in the bot's browser and use the encrypted sign-in form."
         },
         {
-          "front": "Dr. Eggbot",
-          "back": "Featured marketplace bot used to design workflows and other bots."
-        },
-        {
-          "front": "Mimic",
-          "back": "Bot built in the demo to draft emails and Slack messages that sound like you."
-        },
-        {
-          "front": "Grok Bot vs Cursor",
-          "back": "Bot is a general manager; it can spin up Cursor cloud agents on the same account."
-        },
-        {
-          "front": "Chief of staff getting confusing?",
-          "back": "Create another specialist; ask Bot for a relational graph of your bots."
+          "front": "Does sharing a bot elevate permissions?",
+          "back": "No."
         }
       ],
       "quiz": [
@@ -1082,111 +1015,6 @@
           "why": "The skill was called straight line writing."
         },
         {
-          "question": "Same account, cloud agents available: what can Bot do?",
-          "correct": "Spin up Cursor cloud agents",
-          "wrong": [
-            "Nothing",
-            "Only open PRs by hand"
-          ],
-          "why": "'It should just work out of the box.'"
-        },
-        {
-          "question": "Which bot drafts messages that sound like you?",
-          "correct": "Mimic",
-          "wrong": [
-            "Flylo",
-            "Snape"
-          ],
-          "why": "Dr. Eggbot built Mimic in the demo."
-        },
-        {
-          "question": "Do you need to wait for a bot to finish thinking?",
-          "correct": "No, you can message it anytime",
-          "wrong": [
-            "Yes, or it crashes",
-            "Only on mobile"
-          ],
-          "why": "Shown in the 201 demo."
-        },
-        {
-          "question": "Your single chief of staff is overloaded. Fix?",
-          "correct": "Create another specialist",
-          "wrong": [
-            "Add more info to it",
-            "Delete all memory"
-          ],
-          "why": "Don't overload one bot."
-        },
-        {
-          "question": "How do you sign a bot into LinkedIn?",
-          "correct": "Open it in the bot's browser and use the encrypted sign-in form",
-          "wrong": [
-            "Paste the password in chat",
-            "It can't be done"
-          ],
-          "why": "Logins can also be saved as bot logins."
-        }
-      ]
-    },
-    {
-      "lesson": 10,
-      "title": "Grok Bot 201: Routines, handoffs, and auditing your team",
-      "videos": [
-        "aEK0bvZDNFg"
-      ],
-      "summary": "Trigger routines, hand work between bots, keep approvals on until you trust them, and audit your bots regularly.",
-      "concepts": [
-        "Triggers and handoffs",
-        "Approvals until trusted",
-        "Owner-controlled memory",
-        "End-user authentication",
-        "Evaluate and purge",
-        "Slack triggers and permissions"
-      ],
-      "flashcards": [
-        {
-          "front": "Example trigger",
-          "back": "'Starts after every meeting', handing follow-ups to the Gleaner bot via Notion."
-        },
-        {
-          "front": "New handoff: full approval?",
-          "back": "No: build the handoff first, loosen approvals once you trust it."
-        },
-        {
-          "front": "Voice settings",
-          "back": "You can set a bot's voice and speaking speed."
-        },
-        {
-          "front": "Team-bot owner",
-          "back": "Can be the only one allowed to edit its memory."
-        },
-        {
-          "front": "Team-bot tool auth",
-          "back": "Uses each end user's personal auth (your Notion or Datadog MCP)."
-        },
-        {
-          "front": "Does sharing a bot elevate permissions?",
-          "back": "No."
-        },
-        {
-          "front": "Bot hygiene",
-          "back": "Have your chief of staff evaluate all bots, audit routines, and purge stale memories."
-        },
-        {
-          "front": "Too many skills?",
-          "back": "Avoid it; bots also improve on work without a formal skill."
-        },
-        {
-          "front": "Slack or webhook trigger",
-          "back": "Triggers a bot from a message, possibly more token-efficient."
-        },
-        {
-          "front": "Where to set approvals",
-          "back": "Settings, permissions: always allow, or ask when it needs your okay."
-        }
-      ],
-      "quiz": [
-        {
           "question": "Using someone's team bot with Notion: whose login?",
           "correct": "Your own personal authentication",
           "wrong": [
@@ -1194,6 +1022,15 @@
             "A shared Slack password"
           ],
           "why": "Sharing a bot gives no elevated permissions."
+        },
+        {
+          "question": "Same account, cloud agents available: what can Bot do?",
+          "correct": "Spin up Cursor cloud agents",
+          "wrong": [
+            "Nothing",
+            "Only open PRs by hand"
+          ],
+          "why": "'It should just work out of the box.'"
         },
         {
           "question": "Sensible way to start a new automated handoff?",
@@ -1205,6 +1042,15 @@
           "why": "Audrey didn't give the new workflow full approval."
         },
         {
+          "question": "Which bot drafts messages that sound like you?",
+          "correct": "Mimic",
+          "wrong": [
+            "Flylo",
+            "Snape"
+          ],
+          "why": "Dr. Eggbot built Mimic in the demo."
+        },
+        {
           "question": "How do you remove stale knowledge?",
           "correct": "Tell the bot to purge memories",
           "wrong": [
@@ -1214,6 +1060,15 @@
           "why": "Periodic audits help too."
         },
         {
+          "question": "Do you need to wait for a bot to finish thinking?",
+          "correct": "No, you can message it anytime",
+          "wrong": [
+            "Yes, or it crashes",
+            "Only on mobile"
+          ],
+          "why": "Shown in the 201 demo."
+        },
+        {
           "question": "Why might a Slack or webhook trigger be preferred?",
           "correct": "It may be more token-efficient",
           "wrong": [
@@ -1221,40 +1076,59 @@
             "It skips permissions"
           ],
           "why": "Similar to Cursor triggers."
-        },
-        {
-          "question": "Should one bot have lots of skills?",
-          "correct": "No, don't create too many",
-          "wrong": [
-            "Yes, as many as possible",
-            "Skills are required for every task"
-          ],
-          "why": "Bots also learn on work without formal skills."
-        },
-        {
-          "question": "How do you organize bots in the sidebar?",
-          "correct": "Right-click a bot to move it into a section",
-          "wrong": [
-            "Rename them alphabetically",
-            "You can't"
-          ],
-          "why": "Shown in the 201 demo."
         }
       ]
     },
     {
-      "lesson": 11,
-      "title": "Ship code with Grok Bot and Cursor: explore, then hand off to cloud agents",
-      "videos": [
-        "lpi-9F5KJJo"
-      ],
-      "summary": "Package your engineering workflow into a specialist in plain English, let it reproduce bugs on its computer, and use cloud agents.",
+      "id": "lpi-9F5KJJo",
+      "order": 8,
+      "title": "Ship Code at Scale with Grok Bot and Cursor",
+      "url": "https://www.youtube.com/watch?v=lpi-9F5KJJo",
+      "duration": "57:15",
+      "lengthSeconds": 3435,
+      "published": "2026-10-25",
+      "watchOnly": false,
+      "summary": "Ryan and Zoe on shipping code with Grok Bot and Cursor: explore in plain English, hand work to cloud agents, then measure with evals and use the BDK when the work must be deterministic.",
       "concepts": [
         "Prototype and work backwards",
         "Package a specialist",
         "Plain-English guardrails",
         "Reproduce bugs on the bot's computer",
-        "Cloud agents and snapshots"
+        "Repro posted to Slack",
+        "BDK: bots that live in code"
+      ],
+      "chapters": [
+        {
+          "title": "Before AI, the path was linear",
+          "seconds": 133,
+          "concepts": [
+            "A request used to move through triage, a spec, design, then build",
+            "The session contrasts that line with bots that can explore on their own computer"
+          ]
+        },
+        {
+          "title": "Explore, then hand off to cloud agents",
+          "seconds": 728,
+          "concepts": [
+            "Prototype and work backwards",
+            "Package a specialist",
+            "Plain-English guardrails",
+            "Reproduce bugs on the bot's computer",
+            "Cloud agents and snapshots"
+          ]
+        },
+        {
+          "title": "Evals, routing, and the BDK",
+          "seconds": 1016,
+          "concepts": [
+            "Repro posted to Slack",
+            "BDK: bots that live in code",
+            "Chain specialists",
+            "Evals from real issues",
+            "The harness is the value",
+            "About 90% team bots"
+          ]
+        }
       ],
       "flashcards": [
         {
@@ -1262,36 +1136,48 @@
           "back": "A skill for the job, feature context, memory, and guardrails."
         },
         {
+          "front": "Team bot in Slack",
+          "back": "Can post 'I reproduced this issue' where the team works."
+        },
+        {
           "front": "After packaging, you can ...",
           "back": "Multi-thread the specialist across channels."
+        },
+        {
+          "front": "BDK",
+          "back": "Code-first way to build bots, for deterministic work and evals."
         },
         {
           "front": "Grok Bot's edge for engineering",
           "back": "Plain-English guidance plus autonomy: its own computer, browser and connections."
         },
         {
+          "front": "BDK waiting",
+          "back": "A bot can wait a day or a week for confirmation, then proceed."
+        },
+        {
           "front": "Need a skills file in GitHub first?",
           "back": "No, start in plain English."
+        },
+        {
+          "front": "Chain, not mega-bot",
+          "back": "One classifies and routes, one reproduces, maybe one per repo."
         },
         {
           "front": "Why memory beats a static description",
           "back": "It helps the bot remember when to use skills."
         },
         {
+          "front": "Router split in the demo",
+          "back": "73% / 27% on which repo an issue belonged to."
+        },
+        {
           "front": "Practical first step",
           "back": "Connect GitHub, then let the bot use its cloud browser."
         },
         {
-          "front": "Grafana demo",
-          "back": "Bot found an issue, used a play site and GitHub creds, and tried a build to reproduce it."
-        },
-        {
-          "front": "Cloud-agent snapshots",
-          "back": "Saved environments: dependencies, env vars, secrets, MCP connections."
-        },
-        {
-          "front": "Cloud-agent safety",
-          "back": "Sandboxed runs, plus controls for blast radius."
+          "front": "Eval result",
+          "back": "48 out of 50 passed."
         }
       ],
       "quiz": [
@@ -1305,111 +1191,6 @@
           "why": "Later you can bring work into code."
         },
         {
-          "question": "What did the demo bot use its computer for?",
-          "correct": "Finding and reproducing an issue, including a build",
-          "wrong": [
-            "Writing one chat comment",
-            "Deploying to production"
-          ],
-          "why": "It used a play version of the site."
-        },
-        {
-          "question": "What goes into a specialist package?",
-          "correct": "Skill, feature context, memory, guardrails",
-          "wrong": [
-            "Only a model name",
-            "A logo and a name"
-          ],
-          "why": "Then you multi-thread it across channels."
-        },
-        {
-          "question": "Why snapshots for cloud agents?",
-          "correct": "So tasks don't start from scratch each time",
-          "wrong": [
-            "To save screenshots",
-            "For billing"
-          ],
-          "why": "They hold dependencies, env vars, secrets, MCP connections."
-        },
-        {
-          "question": "How are cloud-agent runs kept safe?",
-          "correct": "Sandboxed, with blast-radius controls",
-          "wrong": [
-            "They run on your laptop",
-            "No controls exist"
-          ],
-          "why": "Lesson 11 takeaway."
-        },
-        {
-          "question": "Why does memory help with skills?",
-          "correct": "It remembers when to use them",
-          "wrong": [
-            "It replaces all skills",
-            "It makes skills public"
-          ],
-          "why": "Better than a static description alone."
-        }
-      ]
-    },
-    {
-      "lesson": 12,
-      "title": "Ship code at scale: evals, routing, and when to use the BDK",
-      "videos": [
-        "lpi-9F5KJJo"
-      ],
-      "summary": "Chain specialists, measure them with evals, and use the code-first BDK only for deterministic work.",
-      "concepts": [
-        "Repro posted to Slack",
-        "BDK: bots that live in code",
-        "Chain specialists",
-        "Evals from real issues",
-        "The harness is the value",
-        "About 90% team bots"
-      ],
-      "flashcards": [
-        {
-          "front": "Team bot in Slack",
-          "back": "Can post 'I reproduced this issue' where the team works."
-        },
-        {
-          "front": "BDK",
-          "back": "Code-first way to build bots, for deterministic work and evals."
-        },
-        {
-          "front": "BDK waiting",
-          "back": "A bot can wait a day or a week for confirmation, then proceed."
-        },
-        {
-          "front": "Chain, not mega-bot",
-          "back": "One classifies and routes, one reproduces, maybe one per repo."
-        },
-        {
-          "front": "Router split in the demo",
-          "back": "73% / 27% on which repo an issue belonged to."
-        },
-        {
-          "front": "Eval result",
-          "back": "48 out of 50 passed."
-        },
-        {
-          "front": "Eval suite source",
-          "back": "Real issue names: 10, 100 or 1,000 examples."
-        },
-        {
-          "front": "BDK value vs raw APIs",
-          "back": "The harness: evals, deployment, waiting for confirmation."
-        },
-        {
-          "front": "Share of their bots that are team bots",
-          "back": "About 90%; BDK only occasionally."
-        },
-        {
-          "front": "Recommended path",
-          "back": "Explore in Grok Bot, then a team bot with guardrails, then BDK for deterministic evals."
-        }
-      ],
-      "quiz": [
-        {
           "question": "What share of the presenters' bots are team bots?",
           "correct": "About 90%",
           "wrong": [
@@ -1417,6 +1198,15 @@
             "Fifty-fifty"
           ],
           "why": "BDK is used occasionally for eval-heavy work."
+        },
+        {
+          "question": "What did the demo bot use its computer for?",
+          "correct": "Finding and reproducing an issue, including a build",
+          "wrong": [
+            "Writing one chat comment",
+            "Deploying to production"
+          ],
+          "why": "It used a play version of the site."
         },
         {
           "question": "What did the routing eval show?",
@@ -1428,6 +1218,15 @@
           "why": "Built from real issue names."
         },
         {
+          "question": "What goes into a specialist package?",
+          "correct": "Skill, feature context, memory, guardrails",
+          "wrong": [
+            "Only a model name",
+            "A logo and a name"
+          ],
+          "why": "Then you multi-thread it across channels."
+        },
+        {
           "question": "When should you reach for the BDK?",
           "correct": "When you need deterministic evals",
           "wrong": [
@@ -1437,6 +1236,15 @@
           "why": "Start exploratory in Grok Bot first."
         },
         {
+          "question": "Why snapshots for cloud agents?",
+          "correct": "So tasks don't start from scratch each time",
+          "wrong": [
+            "To save screenshots",
+            "For billing"
+          ],
+          "why": "They hold dependencies, env vars, secrets, MCP connections."
+        },
+        {
           "question": "What's the BDK's value over chaining raw APIs?",
           "correct": "The harness: evals, deployment, waiting",
           "wrong": [
@@ -1444,41 +1252,59 @@
             "None"
           ],
           "why": "You could chain APIs yourself, in theory."
-        },
-        {
-          "question": "Better design than one mega-bot?",
-          "correct": "Chain specialists: router, reproducer, per-repo",
-          "wrong": [
-            "One bot with every skill",
-            "No bots at all"
-          ],
-          "why": "Each specialist has a narrow job."
-        },
-        {
-          "question": "What can you inspect for a BDK bot?",
-          "correct": "Sessions, MCP connectors, logs and who last deployed",
-          "wrong": [
-            "Nothing",
-            "Only its name"
-          ],
-          "why": "Shown in the demo."
         }
       ]
     },
     {
-      "lesson": 13,
-      "title": "How a Series A startup runs on Grok Bot: design your company of bots",
-      "videos": [
-        "qCFUktiL0NU"
-      ],
-      "summary": "Run the company as a team of autonomous bot colleagues that close the loop, directed through one main bot.",
+      "id": "qCFUktiL0NU",
+      "order": 9,
+      "title": "How a Series A Startup Runs on Grok Bot",
+      "url": "https://www.youtube.com/watch?v=qCFUktiL0NU",
+      "duration": "57:53",
+      "lengthSeconds": 3473,
+      "published": "2026-11-12",
+      "watchOnly": false,
+      "summary": "Jeremy, founder of Alo, on running a young company with Grok Bot: a main bot, specialist bots, then finance, phone, recruiting, and office hours.",
       "concepts": [
         "Teams of autonomous colleagues",
         "Close the loop in sales",
         "80% about the company",
         "Parallelize, don't nag",
-        "Talk to 'the king'",
-        "AI SDRs"
+        "Finance, phone, and office hours"
+      ],
+      "chapters": [
+        {
+          "title": "What they handed to bots",
+          "seconds": 152,
+          "concepts": [
+            "Alo had been heavy Grok Bot users for about two months",
+            "The session looks at bots across the team and for customers"
+          ]
+        },
+        {
+          "title": "Design the company of bots",
+          "seconds": 531,
+          "concepts": [
+            "Teams of autonomous colleagues",
+            "Close the loop in sales",
+            "80% about the company",
+            "Parallelize, don't nag",
+            "Talk to 'the king'",
+            "AI SDRs"
+          ]
+        },
+        {
+          "title": "Finance, phone, MCPs, and office hours",
+          "seconds": 1752,
+          "concepts": [
+            "Work in existing tools",
+            "Calls and texts",
+            "Put context in tools",
+            "Attio plus internal MCPs",
+            "AI office hours",
+            "Time investment"
+          ]
+        }
       ],
       "flashcards": [
         {
@@ -1486,36 +1312,48 @@
           "back": "Chatbots, then copilots and agents, now teams of autonomous colleagues."
         },
         {
+          "front": "Finance bot win",
+          "back": "Negotiated a discount on Slack, saving about $300 a month."
+        },
+        {
           "front": "Sales loop example",
           "back": "Research lead, merge dupes, score ICP, fill CRM, draft reply with booking link, AE approves in Slack."
+        },
+        {
+          "front": "Recruiting with bots",
+          "back": "Its own X account or Sales Navigator, e.g. finding a PM with design experience."
         },
         {
           "front": "Why close the loop?",
           "back": "If you don't reply to an email, sales can stall."
         },
         {
+          "front": "Good outbound-call uses",
+          "back": "New leads, unpaid invoices, finding an office, booking a restaurant."
+        },
+        {
           "front": "Founder's 80%",
           "back": "About 80% of his Grok Bot actions were about the company."
+        },
+        {
+          "front": "Phone capability",
+          "back": "Make and receive calls and texts; give the agent a phone number."
         },
         {
           "front": "The noisy-inbox trap",
           "back": "A primary bot dumping 20 tasks a morning until you ignore it."
         },
         {
+          "front": "Tooling philosophy",
+          "back": "'Don't put too much in Grok Bot, put it in the tools.'"
+        },
+        {
           "front": "Fix for the trap",
           "back": "Parallelize with specialists."
         },
         {
-          "front": "'The king'",
-          "back": "The main agent he mostly talks to; he sees it talking to the others."
-        },
-        {
-          "front": "Phone + email + website",
-          "back": "Connected, a bot can answer almost as well as you or the team."
-        },
-        {
-          "front": "AI SDRs",
-          "back": "Manage people who weren't really being managed, so sales time goes where needed."
+          "front": "Their CRM",
+          "back": "Attio, plus internal MCPs."
         }
       ],
       "quiz": [
@@ -1529,111 +1367,6 @@
           "why": "Noticed after two or three weeks."
         },
         {
-          "question": "Problem with 20 tasks every morning?",
-          "correct": "People start ignoring them; parallelize instead",
-          "wrong": [
-            "It's ideal",
-            "You must delete the bot"
-          ],
-          "why": "Use specialists, not one noisy inbox."
-        },
-        {
-          "question": "Who approves the drafted sales reply?",
-          "correct": "The AE, on Slack",
-          "wrong": [
-            "No one",
-            "The customer"
-          ],
-          "why": "Plus a short brief before the call."
-        },
-        {
-          "question": "Who is 'the king'?",
-          "correct": "The main agent he mostly talks to",
-          "wrong": [
-            "The CEO's assistant",
-            "The CRM"
-          ],
-          "why": "He can see it talking to other bots."
-        },
-        {
-          "question": "Why must the system close the loop?",
-          "correct": "An unanswered email can stall sales",
-          "wrong": [
-            "To save storage",
-            "For compliance only"
-          ],
-          "why": "Bots take the workflow start to finish."
-        },
-        {
-          "question": "What lets a bot answer almost as well as the team?",
-          "correct": "Connecting phone, email and website",
-          "wrong": [
-            "A bigger model only",
-            "Turning off memory"
-          ],
-          "why": "Lesson 13 takeaway."
-        }
-      ]
-    },
-    {
-      "lesson": 14,
-      "title": "Startup ops: finance, phone, MCPs, and getting the team on board",
-      "videos": [
-        "qCFUktiL0NU"
-      ],
-      "summary": "Bots work in your existing tools and on the phone; context lives in tools and MCPs; adoption needs office hours.",
-      "concepts": [
-        "Work in existing tools",
-        "Calls and texts",
-        "Put context in tools",
-        "Attio plus internal MCPs",
-        "AI office hours",
-        "Time investment"
-      ],
-      "flashcards": [
-        {
-          "front": "Finance bot win",
-          "back": "Negotiated a discount on Slack, saving about $300 a month."
-        },
-        {
-          "front": "Recruiting with bots",
-          "back": "Its own X account or Sales Navigator, e.g. finding a PM with design experience."
-        },
-        {
-          "front": "Good outbound-call uses",
-          "back": "New leads, unpaid invoices, finding an office, booking a restaurant."
-        },
-        {
-          "front": "Phone capability",
-          "back": "Make and receive calls and texts; give the agent a phone number."
-        },
-        {
-          "front": "Tooling philosophy",
-          "back": "'Don't put too much in Grok Bot, put it in the tools.'"
-        },
-        {
-          "front": "Their CRM",
-          "back": "Attio, plus internal MCPs."
-        },
-        {
-          "front": "Permissions for agents",
-          "back": "Extend existing employee roles and permissions to agents."
-        },
-        {
-          "front": "AI office hours",
-          "back": "CTO and AI manager help anyone, e.g. support, build a tool."
-        },
-        {
-          "front": "Subscriptions mentioned",
-          "back": "Some teams on a $200 Grok subscription, some on $60."
-        },
-        {
-          "front": "Sales team adoption time",
-          "back": "About a week."
-        }
-      ],
-      "quiz": [
-        {
           "question": "Philosophy on knowledge in Bot vs tools?",
           "correct": "Put context in tools and MCPs, teach the bot to use them",
           "wrong": [
@@ -1641,6 +1374,15 @@
             "Never connect a CRM"
           ],
           "why": "They taught it Attio plus internal MCPs."
+        },
+        {
+          "question": "Problem with 20 tasks every morning?",
+          "correct": "People start ignoring them; parallelize instead",
+          "wrong": [
+            "It's ideal",
+            "You must delete the bot"
+          ],
+          "why": "Use specialists, not one noisy inbox."
         },
         {
           "question": "How did they drive adoption?",
@@ -1652,6 +1394,15 @@
           "why": "Anyone can bring a use case."
         },
         {
+          "question": "Who approves the drafted sales reply?",
+          "correct": "The AE, on Slack",
+          "wrong": [
+            "No one",
+            "The customer"
+          ],
+          "why": "Plus a short brief before the call."
+        },
+        {
           "question": "How much did the finance bot's negotiation save?",
           "correct": "About $300 a month",
           "wrong": [
@@ -1661,6 +1412,15 @@
           "why": "It reached out on Slack."
         },
         {
+          "question": "Who is 'the king'?",
+          "correct": "The main agent he mostly talks to",
+          "wrong": [
+            "The CEO's assistant",
+            "The CRM"
+          ],
+          "why": "He can see it talking to other bots."
+        },
+        {
           "question": "Which is a suggested outbound-call use?",
           "correct": "Customers who haven't paid an invoice",
           "wrong": [
@@ -1668,33 +1428,18 @@
             "Placing stock trades"
           ],
           "why": "Also new leads, offices, restaurants."
-        },
-        {
-          "question": "How fast did the sales team adopt it?",
-          "correct": "In a week",
-          "wrong": [
-            "Over a year",
-            "Never"
-          ],
-          "why": "Lesson 14."
-        },
-        {
-          "question": "How do they handle agent permissions?",
-          "correct": "Extend existing employee roles to agents",
-          "wrong": [
-            "Give agents admin",
-            "No permissions"
-          ],
-          "why": "Same thinking as for people."
         }
       ]
     },
     {
-      "lesson": 15,
-      "title": "Marketing with a team of bots: from idea to launch",
-      "videos": [
-        "VSaeKaC2Tck"
-      ],
+      "id": "VSaeKaC2Tck",
+      "order": 10,
+      "title": "Grok Bot for Marketing: Go from idea to launch with a team of Bots",
+      "url": "https://www.youtube.com/watch?v=VSaeKaC2Tck",
+      "duration": "57:37",
+      "lengthSeconds": 3457,
+      "published": "2026-10-25",
+      "watchOnly": false,
       "summary": "A marketing org of specialist bots works in tools like Luma, with human approval and disclosure built in.",
       "concepts": [
         "Specific jobs, sign in once",
@@ -1703,6 +1448,32 @@
         "Crawl-walk-run",
         "Disclose it's a bot",
         "Personal and work bots"
+      ],
+      "chapters": [
+        {
+          "title": "A field-marketing stack",
+          "seconds": 76,
+          "concepts": [
+            "Specific jobs, signed in once",
+            "Bots you message like teammates"
+          ]
+        },
+        {
+          "title": "The specialist team and Luma",
+          "seconds": 649,
+          "concepts": [
+            "Luma, pages, and a trend spotter, plus a chief of staff",
+            "@-mention a bot from another bot"
+          ]
+        },
+        {
+          "title": "Approval before anything goes out",
+          "seconds": 1148,
+          "concepts": [
+            "Luma registrations stay pending until a person approves",
+            "Crawl, walk, run: show the work before it executes"
+          ]
+        }
       ],
       "flashcards": [
         {
@@ -1797,14 +1568,18 @@
           ],
           "why": "Lesson 15."
         }
-      ]
+      ],
+      "legacyLesson": 15
     },
     {
-      "lesson": 16,
-      "title": "Sales that actually finish the job",
-      "videos": [
-        "zupqr-rApp4"
-      ],
+      "id": "zupqr-rApp4",
+      "order": 11,
+      "title": "Grok Bot for Sales: How one company grew its pipeline 140% in a month",
+      "url": "https://www.youtube.com/watch?v=zupqr-rApp4",
+      "duration": "48:52",
+      "lengthSeconds": 2932,
+      "published": "2026-10-25",
+      "watchOnly": false,
       "summary": "Grok Bot is built to finish 100% of the work; steer the volume with caps and calendar rules.",
       "concepts": [
         "100% of the work",
@@ -1813,6 +1588,32 @@
         "Four leads every two hours",
         "Calendar rules",
         "Free people for core work"
+      ],
+      "chapters": [
+        {
+          "title": "Teammates that finish the job",
+          "seconds": 104,
+          "concepts": [
+            "From chat and copilots to colleagues that take work start to finish",
+            "They learn writing style, preferences, and habits"
+          ]
+        },
+        {
+          "title": "Lucy and the sales load",
+          "seconds": 901,
+          "concepts": [
+            "A chief of staff with an inbox, before a shared team bot",
+            "Producers were getting six or seven leads a day"
+          ]
+        },
+        {
+          "title": "Caps, calendar, and the number that was spoken",
+          "seconds": 1140,
+          "concepts": [
+            "Four leads every two hours in the sweet spot they describe",
+            "The spoken pipeline figure is about $200k–$300k up to about $1.1 million. 140% is the title, not a spoken figure."
+          ]
+        }
       ],
       "flashcards": [
         {
@@ -1911,14 +1712,18 @@
           ],
           "why": "A practical sales use."
         }
-      ]
+      ],
+      "legacyLesson": 16
     },
     {
-      "lesson": 17,
-      "title": "Grok Bot x Clay: describe the outcome, skip the busywork",
-      "videos": [
-        "FFOZAl7wihE"
-      ],
+      "id": "FFOZAl7wihE",
+      "order": 12,
+      "title": "Grok Bot X Clay: Describe the outcome, skip the busywork",
+      "url": "https://www.youtube.com/watch?v=FFOZAl7wihE",
+      "duration": "59:22",
+      "lengthSeconds": 3562,
+      "published": "2026-11-04",
+      "watchOnly": false,
       "summary": "Describe the outcome: Grok Bot is the open-ended teammate, Clay the structured enrichment and workflow layer.",
       "concepts": [
         "Describe the outcome",
@@ -1927,6 +1732,32 @@
         "Missing connectors get built",
         "Concrete GTM loops",
         "Pricing: start low"
+      ],
+      "chapters": [
+        {
+          "title": "Grok Bot, then Clay",
+          "seconds": 135,
+          "concepts": [
+            "Grok Bot is the open-ended teammate",
+            "Clay is the structured data and workflow layer"
+          ]
+        },
+        {
+          "title": "A context layer",
+          "seconds": 512,
+          "concepts": [
+            "First-party and third-party signals",
+            "Campaigns should not reinvent the workflow every time"
+          ]
+        },
+        {
+          "title": "Tables you already have",
+          "seconds": 2765,
+          "concepts": [
+            "Legacy Clay tables can be analyzed and upgraded",
+            "Start on the lowest tier and upgrade at the limits"
+          ]
+        }
       ],
       "flashcards": [
         {
@@ -2025,14 +1856,18 @@
           ],
           "why": "It's in the video title."
         }
-      ]
+      ],
+      "legacyLesson": 17
     },
     {
-      "lesson": 18,
-      "title": "Enterprise teams: span of control and end-to-end department workflows",
-      "videos": [
-        "jcKcAfJtTlk"
-      ],
+      "id": "jcKcAfJtTlk",
+      "order": 13,
+      "title": "Grok Bot for Enterprise Teams: Put AI teammates to work across every department",
+      "url": "https://www.youtube.com/watch?v=jcKcAfJtTlk",
+      "duration": "55:16",
+      "lengthSeconds": 3316,
+      "published": "2026-11-04",
+      "watchOnly": false,
       "summary": "Kick off work anywhere, keep approvals at the risky steps, and have one to seven reports with lead bots below.",
       "concepts": [
         "Kick off anywhere, don't babysit",
@@ -2041,6 +1876,32 @@
         "Lead bots surface what matters",
         "Shared VM, teach by video",
         "Webhooks into cloud agents"
+      ],
+      "chapters": [
+        {
+          "title": "Real teammates, not only chat",
+          "seconds": 162,
+          "concepts": [
+            "An identity and a job, not a one-off answer",
+            "Kick work off from the tools you already use"
+          ]
+        },
+        {
+          "title": "A prospector in Salesforce",
+          "seconds": 946,
+          "concepts": [
+            "Signed in, building a sheet, stopping for a person",
+            "Credentials stay in a secure sign-in, not pasted into chat"
+          ]
+        },
+        {
+          "title": "How many bots one person directs",
+          "seconds": 1373,
+          "concepts": [
+            "A span of about seven",
+            "A lead bot surfaces what the person needs to see"
+          ]
+        }
       ],
       "flashcards": [
         {
@@ -2139,14 +2000,18 @@
           ],
           "why": "Let them keep working while you're away."
         }
-      ]
+      ],
+      "legacyLesson": 18
     },
     {
-      "lesson": 19,
-      "title": "Financial services: governed team bots and human review",
-      "videos": [
-        "AdxoMFFmTE0"
-      ],
+      "id": "AdxoMFFmTE0",
+      "order": 14,
+      "title": "Grok Bot for Financial Services: Build your own team of SI analysts",
+      "url": "https://www.youtube.com/watch?v=AdxoMFFmTE0",
+      "duration": "58:31",
+      "lengthSeconds": 3511,
+      "published": "2026-11-04",
+      "watchOnly": false,
       "summary": "Admin-owned team bots hold the verified standard; personal bots call them, and sensitive actions get human review.",
       "concepts": [
         "Works without an API",
@@ -2155,6 +2020,32 @@
         "Auto-review for sensitive actions",
         "Chief of staff memory",
         "Rails between orgs"
+      ],
+      "chapters": [
+        {
+          "title": "Chat, copilots, then teammates",
+          "seconds": 69,
+          "concepts": [
+            "People still drive a copilot",
+            "A teammate owns the workflow from the start"
+          ]
+        },
+        {
+          "title": "Front, middle, and back office",
+          "seconds": 466,
+          "concepts": [
+            "The same pattern across the firm",
+            "Bots use a computer and a browser where there is no API"
+          ]
+        },
+        {
+          "title": "A standard the personal bots call",
+          "seconds": 1020,
+          "concepts": [
+            "Admin-owned team bots hold the verified wording",
+            "Sensitive actions such as a trade go through review"
+          ]
+        }
       ],
       "flashcards": [
         {
@@ -2253,14 +2144,18 @@
           ],
           "why": "Email, SharePoint, Teams and more."
         }
-      ]
+      ],
+      "legacyLesson": 19
     },
     {
-      "lesson": 20,
-      "title": "When your customer is an agent: Coinbase and agentic finance",
-      "videos": [
-        "91J3eaBH6no"
-      ],
+      "id": "91J3eaBH6no",
+      "order": 15,
+      "title": "When Your Customer Is a Superintelligent Agent: How Coinbase uses Grok Bot",
+      "url": "https://www.youtube.com/watch?v=91J3eaBH6no",
+      "duration": "49:51",
+      "lengthSeconds": 2991,
+      "published": "2026-11-14",
+      "watchOnly": false,
       "summary": "Agentic finance means agents that move money; give bots isolated access with hard limits and keep verifying them.",
       "concepts": [
         "Agentic finance",
@@ -2269,6 +2164,32 @@
         "About 60% of agentic volume",
         "Guardrails",
         "Always-on routines"
+      ],
+      "chapters": [
+        {
+          "title": "When the customer is an agent",
+          "seconds": 10,
+          "concepts": [
+            "From chat and agents to hiring a teammate",
+            "Grok Bot has its own computer, data, and memory"
+          ]
+        },
+        {
+          "title": "X402",
+          "seconds": 354,
+          "concepts": [
+            "A wallet so an agent can pay small amounts on the internet",
+            "The scale cited is nearly a million transactions in recent days"
+          ]
+        },
+        {
+          "title": "Isolated access and limits",
+          "seconds": 686,
+          "concepts": [
+            "A bot gets a specific portfolio, not the whole book",
+            "Trade size, hourly limits, and approval stay in the guardrails"
+          ]
+        }
       ],
       "flashcards": [
         {
@@ -2367,14 +2288,18 @@
           ],
           "why": "Lesson 20."
         }
-      ]
+      ],
+      "legacyLesson": 20
     },
     {
-      "lesson": 21,
-      "title": "What boardrooms ask about SI: value, cost, and control",
-      "videos": [
-        "rcwwIEmfcjk"
-      ],
+      "id": "rcwwIEmfcjk",
+      "order": 16,
+      "title": "SpaceXSI x Bain: What boardrooms are asking about the SI SDLC",
+      "url": "https://www.youtube.com/watch?v=rcwwIEmfcjk",
+      "duration": "43:45",
+      "lengthSeconds": 2625,
+      "published": "2026-10-25",
+      "watchOnly": false,
       "summary": "Every AI workflow needs a finance-agreed outcome, a unit cost and a control model; plan price and consumption separately.",
       "concepts": [
         "Realization rate",
@@ -2383,6 +2308,32 @@
         "Risk-tiered autonomy",
         "No vanity KPIs",
         "Kaizen; bottlenecks move"
+      ],
+      "chapters": [
+        {
+          "title": "The question after speed",
+          "seconds": 69,
+          "concepts": [
+            "Boards still ask if teams are moving fast enough, then ask what they got for it",
+            "The spend is not the problem. Unmanaged spend against unmeasured value is."
+          ]
+        },
+        {
+          "title": "The realization gap",
+          "seconds": 137,
+          "concepts": [
+            "Bain research cited here: about 38% of expected AI value becomes measurable results",
+            "Finance has to be able to validate the answer"
+          ]
+        },
+        {
+          "title": "Velocity, quality, and cost",
+          "seconds": 845,
+          "concepts": [
+            "Three axes: velocity, quality, and cost, without giving one up for the others",
+            "Lines of code and adoption are called out as weak measures"
+          ]
+        }
       ],
       "flashcards": [
         {
@@ -2481,139 +2432,334 @@
           ],
           "why": "The bottleneck moves, it doesn't disappear."
         }
-      ]
+      ],
+      "legacyLesson": 21
     },
     {
-      "lesson": 22,
-      "title": "Campus, students, and personal systems you can steal",
-      "videos": [
-        "_apu1u-RuI8",
-        "mykpZ18bkGk"
-      ],
-      "summary": "Grok for answers, Grok Bot for always-on work, Cursor for building; start with the three bots that remove the most pain.",
+      "id": "_apu1u-RuI8",
+      "order": 17,
+      "title": "SpaceXSI for Higher Education: How SI is saving time across campus",
+      "url": "https://www.youtube.com/watch?v=_apu1u-RuI8",
+      "duration": "58:28",
+      "lengthSeconds": 3508,
+      "published": "2026-11-04",
+      "watchOnly": false,
+      "summary": "Lindsay and Santi on higher-ed staff: Grok for answers and sentiment, Grok Bot as an always-on teammate, a crawl-walk-run rollout, and Grok Voice taking most of a large call load.",
       "concepts": [
-        "Grok vs Grok Bot vs Cursor",
-        "Same patterns on campus",
-        "Voice handles 70% of calls",
-        "Start personal, then specialize",
-        "The Harry Potter bot team",
-        "Handhold, then spot-check"
+        "Grok for answers and real-time sentiment from X",
+        "Grok Bot is always on because it has its own computer",
+        "Handhold like a new hire, then spot-check",
+        "Marketplace bots already have context and routines",
+        "About 70% of a 20,000-call day on Grok Voice",
+        "Universities test without HIPAA data, often on a token bucket"
+      ],
+      "chapters": [
+        {
+          "title": "Grok, Grok Bot, and the rest of the platform",
+          "seconds": 141,
+          "concepts": [
+            "Grok for question and answer, plus sentiment from X",
+            "Grok Bot as an always-on teammate with its own computer"
+          ]
+        },
+        {
+          "title": "Handhold, then spot-check",
+          "seconds": 1515,
+          "concepts": [
+            "Crawl, walk, run",
+            "Check a new bot's work every day in the first week"
+          ]
+        },
+        {
+          "title": "Marketplace bots",
+          "seconds": 1772,
+          "concepts": [
+            "Import a bot that already has context, routines, and integrations",
+            "The outbound example drafts on a weekly batch and recaps on Friday"
+          ]
+        },
+        {
+          "title": "Voice, and testing without HIPAA data",
+          "seconds": 2721,
+          "concepts": [
+            "About 70% of a 20,000-call day without a person",
+            "Universities test use cases without HIPAA data"
+          ]
+        }
       ],
       "flashcards": [
         {
-          "front": "Grok",
-          "back": "Questions, answers and sentiment, including real-time signal from X."
+          "front": "What is Grok used for in this session?",
+          "back": "Question and answer, and sentiment analysis, because X gives real-time data on what people are saying."
         },
         {
-          "front": "Grok Bot (campus framing)",
-          "back": "The always-on teammate for research, communication and planning."
+          "front": "Why can Grok Bot act as a real teammate?",
+          "back": "The bots are always on: they have their own computer and the tools to get things done on their own."
         },
         {
-          "front": "Cursor",
-          "back": "Building; coding kicked off from Grok Bot is still done by Cursor cloud agents."
+          "front": "Crawl, walk, run",
+          "back": "Handhold like a new hire, check the work every day in the first week, and treat spot-checking as part of training."
         },
         {
-          "front": "Grok Voice on campus",
-          "back": "About 70% of calls without humans; 30% held back on purpose."
+          "front": "A marketplace bot, as shown",
+          "back": "You can import a bot that already has context, routines, and integrations. The outbound example includes a weekly draft batch and a Friday prospecting recap."
         },
         {
-          "front": "University testing",
-          "back": "Without HIPAA data, often on a token bucket."
+          "front": "Grok Voice on the call example",
+          "back": "About 20,000 support and sales calls a day, with roughly 70% handled without a human. The other 30% is held so some customers still talk to a person."
         },
         {
-          "front": "Snape",
-          "back": "Sends morning and evening calendar digests."
+          "front": "Grok Voice at the time of recording",
+          "back": "The Grok Voice API was number one on speech-to-speech on Artificial Analysis and most other benchmarks."
         },
         {
-          "front": "Hedwig, Sorting Hat, Dumbledore",
-          "back": "Email, recruiter and COO bots in a group chat routing job mail."
+          "front": "How universities were testing",
+          "back": "They still test and design use cases, without HIPAA data. Token spend is often a bucket of tokens you can use on any piece of the platform."
         },
         {
-          "front": "Starting advice",
-          "back": "Start with the three bots that remove the most pain; no tech skills needed."
-        },
-        {
-          "front": "Signing into LinkedIn",
-          "back": "On the bot's computer, since it wasn't a native connector."
-        },
-        {
-          "front": "Teaching style",
-          "back": "Handhold like a new hire, then spot-check; hook up systems first."
+          "front": "What Accessibility Amy found",
+          "back": "A hero image with no alt text, low-contrast news dates, and a student ID field with no label. Cloud agents were then kicked off to fix them."
         }
       ],
       "quiz": [
         {
-          "question": "Who writes code kicked off from Grok Bot?",
-          "correct": "Cursor cloud agents",
+          "question": "Why does this session say Grok is useful for sentiment?",
+          "correct": "X provides real-time data on what people are saying",
           "wrong": [
-            "Grok Bot types into production",
-            "You, by hand"
+            "It only reads the campus SIS",
+            "It requires a HIPAA dataset",
+            "It listens to phone calls by default"
           ],
-          "why": "Per the student session."
+          "why": "Santi says Grok is effective for question and answer and for sentiment analysis because of X."
         },
         {
-          "question": "Starting advice from the student demo?",
-          "correct": "Start with the few bots that solve your biggest pains",
+          "question": "What does 'always on' mean for Grok Bot here?",
+          "correct": "The bot has its own computer and tools, so it can finish work on its own",
           "wrong": [
-            "Build 20 bots on day one",
-            "Only use Canvas"
+            "The bot only runs while the staff laptop is open",
+            "The bot shares the user's keyboard",
+            "The bot is a chatbot with no computer"
           ],
-          "why": "No technical background required."
+          "why": "The session says bots are always on because they have their own computer and the tools to get things done on their own."
         },
         {
-          "question": "Which product is for real-time sentiment from X?",
-          "correct": "Grok",
+          "question": "What share of the example call load does Grok Voice handle without a person?",
+          "correct": "Roughly 70% of about 20,000 support and sales calls a day",
           "wrong": [
-            "Cursor",
-            "Clay"
+            "Every call",
+            "About 30%",
+            "Only after-hours calls"
           ],
-          "why": "Grok Bot is the always-on teammate."
+          "why": "The session says the system handles roughly 70% without human intervention. The other 30% is kept so some customers still talk to a person."
         },
         {
-          "question": "Why hold back 30% of calls from Voice?",
+          "question": "Why hold back about 30% of those calls?",
           "correct": "Some customers should still talk to a person",
           "wrong": [
-            "It's broken",
-            "It's too expensive"
+            "Voice cannot run during the day",
+            "The token bucket is empty",
+            "HIPAA forbids all voice"
           ],
-          "why": "70% handled without human intervention."
+          "why": "The reason given for the other 30% is that they want to speak to customers in certain cases."
         },
         {
-          "question": "What does Snape do?",
-          "correct": "Morning and evening calendar digests",
+          "question": "How were universities described as testing?",
+          "correct": "Without HIPAA data, often against an agreed bucket of tokens",
           "wrong": [
-            "Recruiting",
-            "Email triage"
+            "Only with production medical records",
+            "Only inside Cursor",
+            "Only after a BAA for every pilot"
           ],
-          "why": "Part of the Harry Potter team."
+          "why": "On the HIPAA and BAA question, the session says universities test and design use cases without HIPAA data, and token spend is often a bucket usable across the platform."
         },
         {
-          "question": "How do universities typically test?",
-          "correct": "Without HIPAA data, often on a token bucket",
+          "question": "What is the recommended way to train a bot in this session?",
+          "correct": "Handhold it like a new hire, then spot-check",
           "wrong": [
-            "With all patient data",
-            "Per-seat licenses only"
+            "Turn on full autonomy on day one",
+            "Avoid connectors until month six",
+            "Only use the marketplace with no edits"
           ],
-          "why": "Lesson 22."
+          "why": "They describe a crawl-walk-run approach: handhold like a new hire, check the work daily at first, and treat spot-checking as training."
         }
       ]
     },
     {
-      "lesson": 23,
-      "title": "Voice agents and Grok Imagine in two minutes",
-      "videos": [
-        "W34FDMm1nCk",
-        "SIfDV2JjLL4"
-      ],
-      "summary": "Build a voice agent in about two minutes, in 25 languages at 5 cents a minute, and make video with Grok Imagine 1.5.",
+      "id": "mykpZ18bkGk",
+      "order": 18,
+      "title": "SpaceXSI for Students",
+      "url": "https://www.youtube.com/watch?v=mykpZ18bkGk",
+      "duration": "43:45",
+      "lengthSeconds": 2625,
+      "published": "2026-11-20",
+      "watchOnly": false,
+      "summary": "Ria and Sangini for students: Grok Main, Grok Bot, and Cursor, then Sangini's own bots for calendar, recruiting, email, classes, errands, and news.",
       "concepts": [
-        "Two-minute voice agent",
-        "Expressive or cloned voices",
-        "Learns your docs, takes actions",
-        "Phone numbers",
-        "25 languages, 5 cents a minute",
-        "Imagine 1.5 Video"
+        "Grok Main for study, research, and writing",
+        "Grok Bot as a digital coworker with its own computer",
+        "Cursor cloud agents keep working when the laptop is off",
+        "Routines on a schedule, and skills learned from a video",
+        "Sangini's bots: Dumbledore, Snape, Sorting Hat, Hedwig, Hermione, Dobby, Daily Prophet"
       ],
+      "chapters": [
+        {
+          "title": "The product set",
+          "seconds": 50,
+          "concepts": [
+            "Grok Main for study and research",
+            "Grok Bot as a digital coworker",
+            "Cursor, also called Grok Build here, for coding"
+          ]
+        },
+        {
+          "title": "A portfolio with cloud agents",
+          "seconds": 471,
+          "concepts": [
+            "Build a portfolio site in the Cursor tutorial",
+            "A cloud agent can keep working when the laptop is off",
+            "Design mode lets you interact with the site"
+          ]
+        },
+        {
+          "title": "Create a bot, a routine, and a skill",
+          "seconds": 1052,
+          "concepts": [
+            "Routines run on a schedule or when an event happens",
+            "A YouTube video can be turned into a skill"
+          ]
+        },
+        {
+          "title": "Sangini's day-to-day bots",
+          "seconds": 1768,
+          "concepts": [
+            "Calendar, recruiting, email, Canvas, errands, and a morning news puzzle",
+            "A group chat routes missed job mail"
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "What is the plan of this session?",
+          "back": "An introduction to the products, a Cursor tutorial that builds a portfolio site, how to create Grok bots, then Sangini's day-to-day setup as a college student."
+        },
+        {
+          "front": "Grok Main",
+          "back": "The chat assistant, for studying, research, and writing, as a prompt-and-response interaction."
+        },
+        {
+          "front": "Grok Bot, as introduced here",
+          "back": "A digital coworker: a digital twin with its own computer that remembers what you taught it."
+        },
+        {
+          "front": "Colossus, as described",
+          "back": "The largest and most high-performing single inference compute infrastructure in the world for building AI models. Data mentioned from Cursor, xAI, X, and SpaceX."
+        },
+        {
+          "front": "Local agent vs cloud agent",
+          "back": "A local agent works only while the laptop is on. A cloud agent can work overnight and can be kicked off from a phone."
+        },
+        {
+          "front": "Design mode",
+          "back": "You can interact with websites, including the portfolio the agent built, or with sites open in the browser."
+        },
+        {
+          "front": "Routines",
+          "back": "Inside a bot you can see routines that run on a schedule and routines that run when an event happens, compared here with Cursor automations."
+        },
+        {
+          "front": "Teaching a skill from YouTube",
+          "back": "The demo gives a new bot a YouTube link and asks it to watch the video and learn a skill from it."
+        },
+        {
+          "front": "Sangini's bots",
+          "back": "Dumbledore is the COO. Snape sends morning and evening calendar digests. The Sorting Hat recruits. Hedwig is email. Hermione is Canvas. Dobby runs errands. The Daily Prophet sends the news and a puzzle each morning."
+        },
+        {
+          "front": "The job-mail group chat",
+          "back": "Hedwig, the Sorting Hat, and Dumbledore share a group chat so Hedwig can scan for missed LinkedIn and Handshake job mail and send it to the Sorting Hat."
+        }
+      ],
+      "quiz": [
+        {
+          "question": "What is Grok Main in this session?",
+          "correct": "The chat assistant for studying, research, and writing",
+          "wrong": [
+            "The always-on bot with its own computer",
+            "The coding tool also called Cursor",
+            "A phone agent for campus calls"
+          ],
+          "why": "Ria describes Grok Main as the chat interface: an assistant for studying, research, and writing, in a prompt-and-response style."
+        },
+        {
+          "question": "How is Grok Bot introduced to the students?",
+          "correct": "A digital coworker with its own computer that remembers what you taught it",
+          "wrong": [
+            "A music visualizer",
+            "A token-billing dashboard",
+            "A replacement for the campus SIS"
+          ],
+          "why": "The session calls Grok Bot a digital coworker and a digital twin that has its own computer and remembers what you taught it."
+        },
+        {
+          "question": "When does a cloud agent keep working?",
+          "correct": "Overnight, including after you kick it off from a phone",
+          "wrong": [
+            "Only while the laptop screen is on",
+            "Only inside a Zoom webinar",
+            "Only after a human approves every click"
+          ],
+          "why": "Ria says a local agent works only when the laptop is on, while a cloud agent can work overnight and can be started from a phone."
+        },
+        {
+          "question": "What does Snape do for Sangini?",
+          "correct": "Sends morning and evening calendar digests",
+          "wrong": [
+            "Recruits",
+            "Reads Canvas",
+            "Sends the morning news and a puzzle"
+          ],
+          "why": "Sangini says Snape sends the morning and evening calendar digest so she does not miss anything."
+        },
+        {
+          "question": "Which bot is Hedwig?",
+          "correct": "The email bot",
+          "wrong": [
+            "The COO",
+            "The Canvas bot",
+            "The errand bot"
+          ],
+          "why": "Sangini says Hedwig is her email bot. Hermione is Canvas, Dobby runs errands, and Dumbledore is the COO."
+        },
+        {
+          "question": "Why are Hedwig, the Sorting Hat, and Dumbledore in one group chat?",
+          "correct": "So missed job mail can be scanned and passed to the recruiting bot",
+          "wrong": [
+            "So they can sit in on lectures",
+            "So they share one laptop keyboard",
+            "So they bill a token bucket"
+          ],
+          "why": "Sangini wanted Hedwig to scan email for LinkedIn and Handshake job postings she missed and send them to the Sorting Hat."
+        }
+      ]
+    },
+    {
+      "id": "W34FDMm1nCk",
+      "order": 19,
+      "title": "Introducing Grok Voice Agent Builder",
+      "url": "https://www.youtube.com/watch?v=W34FDMm1nCk",
+      "duration": "0:46",
+      "lengthSeconds": 46,
+      "published": "2026-07-25",
+      "watchOnly": false,
+      "summary": "Build a voice agent in about two minutes: pick or clone a voice, teach it from your docs, give it a phone number, and run it in 25 languages at 5 cents a minute.",
+      "concepts": [
+        "About two minutes to create",
+        "Expressive voices, or a clone from a couple of minutes of audio",
+        "Learns from your docs and can take actions",
+        "A free number, or bring your own",
+        "25 languages, 5 cents a minute, at x.ai/voice"
+      ],
+      "chapters": [],
       "flashcards": [
         {
           "front": "Voice agent build time",
@@ -2646,14 +2792,6 @@
         {
           "front": "Where to build voice agents",
           "back": "x.ai/voice"
-        },
-        {
-          "front": "Grok Imagine 1.5 Video",
-          "back": "Speak naturally; it helps business owners and creators make anything."
-        },
-        {
-          "front": "Where to try Imagine",
-          "back": "grok.com/imagine"
         }
       ],
       "quiz": [
@@ -2665,15 +2803,6 @@
             "$5 per second, English only"
           ],
           "why": "From the launch short."
-        },
-        {
-          "question": "Where does the Imagine short say to try it?",
-          "correct": "grok.com/imagine",
-          "wrong": [
-            "Only in Slack",
-            "It gives no URL"
-          ],
-          "why": "Imagine 1.5 Video."
         },
         {
           "question": "How long to create a voice agent?",
@@ -2712,6 +2841,119 @@
           "why": "Lesson 23."
         }
       ]
+    },
+    {
+      "id": "SIfDV2JjLL4",
+      "order": 20,
+      "title": "Introducing Grok Imagine 1.5 Video",
+      "url": "https://www.youtube.com/watch?v=SIfDV2JjLL4",
+      "duration": "0:37",
+      "lengthSeconds": 37,
+      "published": "2026-06-25",
+      "watchOnly": false,
+      "summary": "A 37-second promo: Grok Imagine 1.5 lets you speak naturally, and it is aimed at business owners and creators. The short points to grok.com/imagine.",
+      "concepts": [
+        "Speak naturally",
+        "For business owners and creators",
+        "Try it at grok.com/imagine"
+      ],
+      "chapters": [],
+      "flashcards": [
+        {
+          "front": "What does the short say just dropped?",
+          "back": "Grok 1.5 video, which it then calls Grok Imagine 1.5."
+        },
+        {
+          "front": "How do you make something in Imagine 1.5?",
+          "back": "Speak naturally. The short says it helps business owners and creators make anything."
+        },
+        {
+          "front": "Where does the short say to try it?",
+          "back": "grok.com/imagine"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "Where does the Imagine short say to try it?",
+          "correct": "grok.com/imagine",
+          "wrong": [
+            "x.ai/voice",
+            "A campus marketplace",
+            "Only inside Cursor"
+          ],
+          "why": "The short says to try it now at grok.com/imagine."
+        },
+        {
+          "question": "Who does the short say Grok Imagine 1.5 helps?",
+          "correct": "Business owners and creators",
+          "wrong": [
+            "Only campus call centers",
+            "Only board finance teams",
+            "Only people cloning a voice"
+          ],
+          "why": "The spoken line is that Grok Imagine 1.5 lets you speak naturally and helps business owners and creators make anything."
+        }
+      ]
+    },
+    {
+      "id": "pS6_5PNS8qs",
+      "order": 21,
+      "title": "Introducing Grok 4.5: Fast, affordable intelligence",
+      "url": "https://www.youtube.com/watch?v=pS6_5PNS8qs",
+      "duration": "0:56",
+      "lengthSeconds": 56,
+      "published": "2026-07-25",
+      "watchOnly": true,
+      "summary": "A 56-second promo. The auto-generated transcript is music and a cheer, with no spoken product lesson.",
+      "concepts": [],
+      "chapters": [],
+      "flashcards": [],
+      "quiz": []
+    },
+    {
+      "id": "ffNQGX6gXaU",
+      "order": 22,
+      "title": "Use 14 references in Grok Imagine videos",
+      "url": "https://www.youtube.com/watch?v=ffNQGX6gXaU",
+      "duration": "0:40",
+      "lengthSeconds": 40,
+      "published": "2026-09-25",
+      "watchOnly": true,
+      "summary": "A 40-second promo titled for using 14 references in Grok Imagine videos. The spoken transcript is only a short greeting over music, so there is no lesson to quiz.",
+      "concepts": [],
+      "chapters": [],
+      "flashcards": [],
+      "quiz": []
+    },
+    {
+      "id": "OvBayqdwUag",
+      "order": 23,
+      "title": "Odyssey Pilot Scene featuring Genre AI and Grok Imagine",
+      "url": "https://www.youtube.com/watch?v=OvBayqdwUag",
+      "duration": "2:49",
+      "lengthSeconds": 169,
+      "published": "2026-09-25",
+      "watchOnly": true,
+      "summary": "A cinematic Odyssey scene, titled as a pilot with Genre AI and Grok Imagine. The transcript is the Sirens passage, not a product lesson.",
+      "concepts": [],
+      "chapters": [],
+      "flashcards": [],
+      "quiz": []
+    },
+    {
+      "id": "3gNg7NdoPIk",
+      "order": 24,
+      "title": "Odyssey Pilot featuring Wonder Studios and Grok Imagine",
+      "url": "https://www.youtube.com/watch?v=3gNg7NdoPIk",
+      "duration": "4:09",
+      "lengthSeconds": 249,
+      "published": "2026-10-25",
+      "watchOnly": true,
+      "summary": "A cinematic Odyssey pilot with Wonder Studios and Grok Imagine. The transcript follows Odysseus from the wooden horse toward Ithaca, not a product lesson.",
+      "concepts": [],
+      "chapters": [],
+      "flashcards": [],
+      "quiz": []
     }
   ],
   "scenarios": [
@@ -2723,7 +2965,7 @@
         "Disconnect Gmail entirely"
       ],
       "why": "Rules with always ask / always allow tighten behavior without rewriting the brief.",
-      "lesson": 4
+      "video": "CODaDnHwe2M"
     },
     {
       "situation": "Your India dev team should share one bot that knows GConf's repo conventions, while each dev's DMs stay private.",
@@ -2733,7 +2975,7 @@
         "Everyone uses your personal bot"
       ],
       "why": "Managers set it up once; one-on-one DMs are never shared.",
-      "lesson": 8
+      "video": "FNQkRPR4h2Y"
     },
     {
       "situation": "A bug in the GConf Next.js app needs reproducing before anyone touches the code.",
@@ -2743,7 +2985,7 @@
         "Paste the stack trace into a search engine"
       ],
       "why": "The demo bot reproduced an issue using a play site and a build.",
-      "lesson": 11
+      "video": "lpi-9F5KJJo"
     },
     {
       "situation": "Speaker and partner follow-ups should be pulled after every call.",
@@ -2753,7 +2995,7 @@
         "Email yourself a reminder"
       ],
       "why": "201 showed 'starts after every meeting' with a handoff, approvals still on.",
-      "lesson": 10
+      "video": "aEK0bvZDNFg"
     },
     {
       "situation": "Your main bot sends you 20 tasks every morning and you've started ignoring it.",
@@ -2763,7 +3005,7 @@
         "Mute notifications forever"
       ],
       "why": "Avoid the noisy inbox; keep one to seven reports.",
-      "lesson": 13
+      "video": "qCFUktiL0NU"
     },
     {
       "situation": "You want a weekly GConf dashboard that stays private until you share it with an investor.",
@@ -2773,7 +3015,7 @@
         "Email screenshots weekly"
       ],
       "why": "Pages start private; share with people, the team or publicly.",
-      "lesson": 6
+      "video": "lQB3kZZZYss"
     },
     {
       "situation": "Registrations for a GConf meetup on Luma should be reviewed before acceptance.",
@@ -2783,7 +3025,7 @@
         "Delete all registrations"
       ],
       "why": "The marketing demo kept registrations pending until approval.",
-      "lesson": 15
+      "video": "VSaeKaC2Tck"
     },
     {
       "situation": "You need a list of European mid-size conferences as distribution partners.",
@@ -2793,7 +3035,7 @@
         "Ask for 'some conferences'"
       ],
       "why": "Describe the outcome, skip the busywork.",
-      "lesson": 17
+      "video": "FFOZAl7wihE"
     },
     {
       "situation": "A tool GConf relies on has no connector in the marketplace.",
@@ -2803,7 +3045,7 @@
         "Wait months for a vendor"
       ],
       "why": "Bots can build a connector or use the site anyway.",
-      "lesson": 6
+      "video": "lQB3kZZZYss"
     },
     {
       "situation": "A waitlist form submission should trigger a code change preview.",
@@ -2813,7 +3055,7 @@
         "Give the form production database access"
       ],
       "why": "The enterprise demo wired webhooks into cloud agents with guards.",
-      "lesson": 18
+      "video": "jcKcAfJtTlk"
     },
     {
       "situation": "You're about to present GConf AI's AI ROI to your board.",
@@ -2823,7 +3065,7 @@
         "Show raw adoption only"
       ],
       "why": "Bain: every workflow needs outcome, unit cost and control model.",
-      "lesson": 21
+      "video": "rcwwIEmfcjk"
     },
     {
       "situation": "Official GConf pricing keeps drifting across different bots' answers.",
@@ -2833,7 +3075,7 @@
         "Retype the prices in every chat"
       ],
       "why": "Personal bots call the team bot for verified data.",
-      "lesson": 19
+      "video": "AdxoMFFmTE0"
     },
     {
       "situation": "Inbound calls asking for hours, location and demo requests need answering.",
@@ -2843,7 +3085,7 @@
         "Let calls ring out"
       ],
       "why": "Voice agents learn your docs and can use a free number.",
-      "lesson": 23
+      "video": "W34FDMm1nCk"
     },
     {
       "situation": "Supabase data should give the bot context without pasting tables into chat.",
@@ -2853,7 +3095,7 @@
         "Keep everything only in memory"
       ],
       "why": "Put context in the tools, not only in Grok Bot.",
-      "lesson": 14
+      "video": "qCFUktiL0NU"
     },
     {
       "situation": "An outreach bot is about to email partners on your behalf.",
@@ -2863,7 +3105,7 @@
         "Use a made-up sender name"
       ],
       "why": "Disclosure is called out as good practice.",
-      "lesson": 15
+      "video": "VSaeKaC2Tck"
     },
     {
       "situation": "You want to try a finance bot on GConf's subscriptions account.",
@@ -2873,7 +3115,7 @@
         "No limits, to save time"
       ],
       "why": "Coinbase guardrails: isolation, caps, approvals, verification.",
-      "lesson": 20
+      "video": "91J3eaBH6no"
     },
     {
       "situation": "Pipeline outreach floods you during packed event weeks.",
@@ -2883,7 +3125,7 @@
         "Stop sales entirely"
       ],
       "why": "Steer volume: four leads every two hours, calendar-aware.",
-      "lesson": 16
+      "video": "zupqr-rApp4"
     },
     {
       "situation": "A first teammate is joining and should get GConf bots with safe defaults.",
@@ -2893,7 +3135,7 @@
         "No limits at all"
       ],
       "why": "Admins roll out via groups, approvals and spend limits.",
-      "lesson": 7
+      "video": "NhrXdX_93Hc"
     },
     {
       "situation": "You want a bot to learn GConf's writing voice from a talk you gave on YouTube.",
@@ -2903,7 +3145,7 @@
         "It can't learn from video"
       ],
       "why": "201: a bot turned video principles into a writing skill.",
-      "lesson": 9
+      "video": "aEK0bvZDNFg"
     },
     {
       "situation": "You're overwhelmed checking on many bots one by one.",
@@ -2913,7 +3155,7 @@
         "Delete half of them"
       ],
       "why": "Competitive Carl pattern from the enterprise session.",
-      "lesson": 18
+      "video": "jcKcAfJtTlk"
     }
   ]
 }

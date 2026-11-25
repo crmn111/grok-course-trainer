@@ -2,14 +2,14 @@ import { rerender } from "./bus.js";
 import {
   allCards,
   allQuestions,
-  cardsForLesson,
+  cardsForVideo,
   counts,
-  lessonByNumber,
-  lessons,
-  questionsForLesson,
+  questionsForVideo,
   safeVideoId,
   scenarios,
-  videoInfo,
+  studyVideos,
+  videoById,
+  videos,
 } from "./course.js";
 import course from "./course.js";
 import { updateChrome } from "./chrome.js";
@@ -35,14 +35,14 @@ import {
   recordQuiz,
   replaceProgress,
   resetProgress,
-  toggleLesson,
+  toggleVideo,
   warning,
 } from "./state.js";
 import { applyScheme } from "./theme.js";
 
 const TOTAL = counts();
-let lessonFilter = "all";
-let activeVideo = null;
+let videoFilter = "all";
+let seekSeconds = 0;
 let session = null;
 let keyHandler = null;
 
@@ -50,8 +50,8 @@ function progress() {
   return get();
 }
 
-function lessonRecord(number) {
-  return progress().lessons[String(number)] || { done: false, bestQuiz: null, attempts: 0, rewarded: false };
+function videoRecord(id) {
+  return progress().videos[id] || { done: false, bestQuiz: null, attempts: 0, rewarded: false };
 }
 
 function cardRecord(id) {
@@ -70,7 +70,7 @@ function clearTimer() {
 export function leave() {
   clearTimer();
   session = null;
-  activeVideo = null;
+  seekSeconds = 0;
   if (keyHandler) {
     window.removeEventListener("keydown", keyHandler);
     keyHandler = null;
@@ -107,14 +107,14 @@ function installCardKeys() {
 function createCardSession(id) {
   const deck = id === "all"
     ? weakestFirst(allCards().map((card) => ({ ...card, state: cardRecord(card.id) })), 20)
-    : cardsForLesson(id);
+    : cardsForVideo(id);
   if (!deck.length) return null;
-  const lesson = id === "all" ? null : lessonByNumber(id);
-  if (id !== "all" && !lesson) return null;
+  const video = id === "all" ? null : videoById(id);
+  if (id !== "all" && !video) return null;
   return {
     kind: "cards",
     id,
-    lesson,
+    video,
     queue: deck.map((card) => ({ ...card })),
     ids: deck.map((card) => card.id),
     flipped: false,
@@ -134,13 +134,13 @@ function createQuizSession(id) {
       recorded: false,
     };
   }
-  const lesson = lessonByNumber(id);
-  if (!lesson) return null;
+  const video = videoById(id);
+  if (!video || !video.quiz.length) return null;
   return {
     kind: "quiz",
-    mode: "lesson",
-    lesson,
-    items: shuffle(questionsForLesson(lesson.lesson)).map((question) => ({
+    mode: "video",
+    video,
+    items: shuffle(questionsForVideo(video.id)).map((question) => ({
       question,
       options: optionsFor(question),
       picked: null,
@@ -152,25 +152,25 @@ function createQuizSession(id) {
 }
 
 export function pageTitle(route) {
-  if (route.section === "lessons" && route.id) {
-    const lesson = lessonByNumber(route.id);
-    return lesson ? `Lesson ${lesson.lesson}: ${lesson.title}` : "Lessons";
+  if (route.section === "videos" && route.id) {
+    const video = videoById(route.id);
+    return video ? video.title : "Videos";
   }
   if (route.section === "cards") return "Flashcards";
   if (route.section === "quiz" && route.id === "exam") return "Final exam";
   if (route.section === "quiz" && route.id) {
-    const lesson = lessonByNumber(route.id);
-    return lesson ? `Quiz ${lesson.lesson}` : "Quizzes";
+    const video = videoById(route.id);
+    return video ? `Quiz: ${video.title}` : "Quizzes";
   }
   if (route.section === "quiz") return "Quizzes";
   if (route.section === "play") return "Games";
   if (route.section === "progress") return "Progress";
-  return "Lessons";
+  return "Videos";
 }
 
 export function render(route) {
-  if (route.section === "lessons" && route.id) return renderLesson(route.id);
-  if (route.section === "lessons") return renderLessons();
+  if (route.section === "videos" && route.id) return renderVideo(route.id);
+  if (route.section === "videos") return renderVideos();
   if (route.section === "cards" && route.id) return renderCardStudy();
   if (route.section === "cards") return renderCardIndex();
   if (route.section === "quiz" && route.id) return renderQuiz();
@@ -182,51 +182,56 @@ export function render(route) {
 }
 
 function renderMissing() {
-  return `<section class="page"><h1>That page is not in the course</h1><p class="lede">The trainer has lessons, flashcards, quizzes, games, and progress.</p><p><a class="btn primary" href="#/lessons">Back to lessons</a></p></section>`;
+  return `<section class="page"><h1>That page is not in the course</h1><p class="lede">The trainer has a page for every Grok video, plus flashcards, quizzes, games, and progress.</p><p><a class="btn primary" href="#/videos">Back to videos</a></p></section>`;
 }
 
-function renderLessons() {
-  const records = lessons().map((lesson) => ({ lesson, record: lessonRecord(lesson.lesson) }));
+function renderVideos() {
+  const records = videos().map((video) => ({ video, record: videoRecord(video.id) }));
   const next = records.find((item) => !item.record.done);
   const filtered = records.filter((item) => {
-    if (lessonFilter === "done") return item.record.done;
-    if (lessonFilter === "open") return !item.record.done;
+    if (videoFilter === "done") return item.record.done;
+    if (videoFilter === "open") return !item.record.done;
+    if (videoFilter === "watch") return item.video.watchOnly;
     return true;
   });
   const doneCount = records.filter((item) => item.record.done).length;
   const banner = next
-    ? `<a class="up-next" href="#/lessons/${next.lesson.lesson}">
+    ? `<a class="up-next" href="#/videos/${next.video.id}">
         <span>
-          <strong>${next.lesson.lesson} · ${esc(next.lesson.title)}</strong>
-          <span class="sum">${esc(next.lesson.summary)}</span>
+          <strong>${next.video.order} · ${esc(next.video.title)}</strong>
+          <span class="sum">${esc(next.video.summary)}</span>
         </span>
         <span class="btn-face">Continue</span>
       </a>`
     : `<div class="up-next static">
-        <span><strong>All ${TOTAL.lessons} lessons are marked done.</strong><span class="sum">The final exam is 20 questions drawn from the whole course.</span></span>
+        <span><strong>All ${TOTAL.videos} videos are marked done.</strong><span class="sum">The final exam is 20 questions drawn from the whole course.</span></span>
         <a class="btn-face" href="#/quiz/exam">Final exam</a>
       </div>`;
-  const tiles = filtered.map(({ lesson, record }) => {
-    const mastered = masteredAmong(cardsForLesson(lesson.lesson));
-    const total = lesson.flashcards.length;
-    return `<a class="tile" href="#/lessons/${lesson.lesson}">
-      <span class="tile-num">${lesson.lesson}</span>
+  const tiles = filtered.map(({ video, record }) => {
+    const mastered = masteredAmong(cardsForVideo(video.id));
+    const total = video.flashcards.length;
+    const status = video.watchOnly
+      ? (record.done ? `${icon("check")} Watched` : "Watch only")
+      : `${record.done ? `${icon("check")} Done` : "Not done"} · ${mastered}/${total} cards`;
+    return `<a class="tile video-tile" href="#/videos/${video.id}">
+      <img alt="" src="https://i.ytimg.com/vi/${video.id}/mqdefault.jpg" width="320" height="180">
       <span class="tile-copy">
-        <span class="tile-title">${esc(lesson.title)}</span>
-        <span class="tile-sum">${esc(lesson.summary)}</span>
-        <span class="tile-status">${record.done ? `${icon("check")} Done` : "Not done"} · ${mastered}/${total} cards</span>
+        <span class="tile-kicker">${video.order} · ${esc(video.duration)}${video.watchOnly ? " · Watch only" : ""}</span>
+        <span class="tile-title">${esc(video.title)}</span>
+        <span class="tile-status">${status}</span>
       </span>
     </a>`;
   }).join("");
-  const empty = filtered.length ? "" : `<p class="fine">Nothing in this filter. ${doneCount} of ${TOTAL.lessons} lessons are marked done.</p>`;
+  const empty = filtered.length ? "" : `<p class="fine">Nothing in this filter. ${doneCount} of ${TOTAL.videos} videos are marked done.</p>`;
   return `<section class="page">
-    <h1>Lessons</h1>
-    <p class="lede">Twenty-three lessons from the Grok YouTube channel, in order. The lesson plan is one a day.</p>
+    <h1>Videos</h1>
+    <p class="lede">${TOTAL.videos} videos from the Grok channel, in learning order. Long sessions open into chapters. Music promos and the Odyssey pilots are marked watch only.</p>
     ${banner}
-    <div class="filters" role="group" aria-label="Filter lessons">
+    <div class="filters" role="group" aria-label="Filter videos">
       ${filterButton("all", "All")}
       ${filterButton("open", "Still open")}
       ${filterButton("done", "Done")}
+      ${filterButton("watch", "Watch only")}
     </div>
     <div class="tiles">${tiles}</div>
     ${empty}
@@ -235,69 +240,78 @@ function renderLessons() {
 }
 
 function filterButton(value, label) {
-  const pressed = lessonFilter === value ? "true" : "false";
+  const pressed = videoFilter === value ? "true" : "false";
   return `<button type="button" class="btn" data-action="filter" data-filter="${value}" aria-pressed="${pressed}">${label}</button>`;
 }
 
-function renderLesson(id) {
-  const lesson = lessonByNumber(id);
-  if (!lesson) return renderMissing();
-  const record = lessonRecord(lesson.lesson);
-  const mastered = masteredAmong(cardsForLesson(lesson.lesson));
-  const concepts = lesson.concepts.map((concept) => `<li>${esc(concept)}</li>`).join("");
-  const videos = lesson.videos.map((videoId) => videoButton(lesson, videoId)).join("");
-  const player = activeVideo?.lesson === lesson.lesson ? playerFrame(activeVideo.id) : "";
-  const best = record.bestQuiz == null ? "No quiz yet" : `Best quiz ${record.bestQuiz}%`;
-  return `<article class="page">
-    <p class="crumb"><a href="#/lessons">All lessons</a></p>
-    <h1>Lesson ${lesson.lesson}. ${esc(lesson.title)}</h1>
-    <p class="lede">${esc(lesson.summary)}</p>
-    <p class="fine" data-done-note>${record.done ? "Marked done." : "Not done yet."} ${best}. Cards mastered ${mastered} of ${lesson.flashcards.length}.</p>
-    <div class="actions">
-      <a class="btn primary" href="#/cards/${lesson.lesson}">Flashcards</a>
-      <a class="btn" href="#/quiz/${lesson.lesson}">Quiz</a>
-      <button type="button" class="btn" data-action="toggle-done" data-lesson="${lesson.lesson}">${record.done ? "Mark as not done" : "Mark lesson done"}</button>
+function renderVideo(id) {
+  const video = videoById(id);
+  if (!video || !safeVideoId(video.id)) return renderMissing();
+  const record = videoRecord(video.id);
+  const mastered = masteredAmong(cardsForVideo(video.id));
+  const concepts = video.concepts.map((concept) => `<li>${esc(concept)}</li>`).join("");
+  const best = video.watchOnly
+    ? "No quiz on a watch-only video."
+    : (record.bestQuiz == null ? "No quiz yet" : `Best quiz ${record.bestQuiz}%`);
+  const doneLabel = video.watchOnly
+    ? (record.done ? "Mark as not watched" : "Mark watched")
+    : (record.done ? "Mark as not done" : "Mark video done");
+  const study = video.watchOnly ? "" : `<div class="actions">
+      ${video.flashcards.length ? `<a class="btn primary" href="#/cards/${video.id}">Flashcards</a>` : ""}
+      ${video.quiz.length ? `<a class="btn" href="#/quiz/${video.id}">Quiz</a>` : ""}
+      <button type="button" class="btn" data-action="toggle-done" data-video="${video.id}">${doneLabel}</button>
+    </div>`;
+  const watchActions = video.watchOnly ? `<div class="actions">
+      <button type="button" class="btn" data-action="toggle-done" data-video="${video.id}">${doneLabel}</button>
     </div>
-    <h2>Core concepts</h2>
-    <ul class="concepts">${concepts}</ul>
-    <h2>Source videos</h2>
-    <div class="video-list">${videos}</div>
-    ${player}
-    <p class="fine">The player needs a network connection. Lessons, cards, quizzes, and saved progress work offline.</p>
+    <p class="watch-note">Watch only. The transcript has no lesson, so this video has no cards and no quiz.</p>` : "";
+  const conceptBlock = concepts
+    ? `<h2>Core concepts</h2><ul class="concepts">${concepts}</ul>`
+    : "";
+  return `<article class="page">
+    <p class="crumb"><a href="#/videos">All videos</a></p>
+    <h1>${esc(video.title)}</h1>
+    <p class="lede">${esc(video.summary)}</p>
+    <p class="fine" data-done-note>${record.done ? "Marked done." : "Not done yet."} ${best}${video.flashcards.length ? `. Cards mastered ${mastered} of ${video.flashcards.length}.` : ""} ${esc(video.duration)}.</p>
+    ${study}${watchActions}
+    ${playerFrame(video)}
+    <p class="fine">The player needs a network connection. The summary, cards, quizzes, and saved progress work offline. <a href="${esc(video.url)}" target="_blank" rel="noopener noreferrer">Open on YouTube</a>.</p>
+    ${conceptBlock}
+    ${renderChapters(video)}
   </article>`;
 }
 
-function videoButton(lesson, videoId) {
-  const safe = safeVideoId(videoId);
-  const info = videoInfo(videoId);
-  if (!safe || !info) return "";
-  const pressed = activeVideo?.lesson === lesson.lesson && activeVideo.id === safe;
-  return `<div class="video-row">
-    <button type="button" class="video" data-action="play-video" data-lesson="${lesson.lesson}" data-video="${safe}" aria-pressed="${pressed ? "true" : "false"}">
-      <img alt="" src="https://i.ytimg.com/vi/${safe}/hqdefault.jpg" width="320" height="180">
-      <span><span class="tile-title">${esc(info.title)}</span><span class="fine">${esc(info.duration)}</span></span>
-    </button>
-    <a href="${esc(info.url)}" target="_blank" rel="noopener noreferrer">Watch on YouTube</a>
-  </div>`;
+function renderChapters(video) {
+  if (!video.chapters.length) return "";
+  const items = video.chapters.map((chapter) => {
+    const pressed = seekSeconds === chapter.seconds;
+    const concepts = chapter.concepts.map((concept) => `<li>${esc(concept)}</li>`).join("");
+    return `<li class="chapter">
+      <button type="button" class="btn chapter-jump" data-action="seek" data-seconds="${chapter.seconds}" aria-pressed="${pressed ? "true" : "false"}">About ${clock(chapter.seconds)} · ${esc(chapter.title)}</button>
+      <ul class="concepts">${concepts}</ul>
+    </li>`;
+  }).join("");
+  return `<h2>Chapters</h2>
+    <p class="fine">Times are approximate. They come from where the topic first shows up in the transcript, scaled to the video length. Choosing one starts the player there.</p>
+    <ol class="chapters">${items}</ol>`;
 }
 
-function playerFrame(id) {
-  const info = videoInfo(id);
-  const title = info ? info.title : "Lesson video";
-  return `<div class="frame"><iframe title="${esc(title)}" src="https://www.youtube-nocookie.com/embed/${id}?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`;
+function playerFrame(video) {
+  const start = seekSeconds > 0 ? `&start=${seekSeconds}` : "";
+  return `<div class="frame" tabindex="-1"><iframe title="${esc(video.title)}" src="https://www.youtube-nocookie.com/embed/${video.id}?rel=0${start}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`;
 }
 
 function renderCardIndex() {
-  const rows = lessons().map((lesson) => {
-    const cards = cardsForLesson(lesson.lesson);
+  const rows = studyVideos().map((video) => {
+    const cards = cardsForVideo(video.id);
     const mastered = masteredAmong(cards);
-    return `<li><a href="#/cards/${lesson.lesson}"><span>${lesson.lesson}. ${esc(lesson.title)}</span><span class="fine">${mastered}/${cards.length} mastered</span></a></li>`;
+    return `<li><a href="#/cards/${video.id}"><span>${video.order}. ${esc(video.title)}</span><span class="fine">${mastered}/${cards.length} mastered</span></a></li>`;
   }).join("");
   return `<section class="page">
     <h1>Flashcards</h1>
-    <p class="lede">${TOTAL.cards} cards. A card is mastered after you know it twice in a row. Again sends it back a couple of cards later and clears that run.</p>
+    <p class="lede">${TOTAL.cards} cards. A card is mastered after you know it twice in a row. Again sends it back a couple of cards later and clears that run. Watch-only videos have no deck.</p>
     <a class="up-next" href="#/cards/all">
-      <span><strong>20 weakest, all lessons</strong><span class="sum">Unseen cards and cards you missed come first.</span></span>
+      <span><strong>20 weakest, all videos</strong><span class="sum">Unseen cards and cards you missed come first.</span></span>
       <span class="btn-face">Start</span>
     </a>
     <ol class="plain-list">${rows}</ol>
@@ -317,8 +331,8 @@ function renderCardStudy() {
   const disabled = session.flipped ? "" : "disabled";
   return `<section class="page study">
     <p class="crumb"><a href="#/cards">All decks</a></p>
-    <h1>${session.lesson ? `Lesson ${session.lesson.lesson} cards` : "20 weakest cards"}</h1>
-    <p class="fine">${session.queue.length} left in this round, including cards you asked to see again. Mastered in this set: ${mastered} of ${session.ids.length}. Lesson ${card.lesson}: ${esc(card.lessonTitle)}</p>
+    <h1>${session.video ? esc(session.video.title) : "20 weakest cards"}</h1>
+    <p class="fine">${session.queue.length} left in this round, including cards you asked to see again. Mastered in this set: ${mastered} of ${session.ids.length}. ${esc(card.videoTitle)}</p>
     <button type="button" class="study-card ${session.flipped ? "is-back is-revealing" : "is-revealing"}" data-action="flip" data-focus-card aria-label="${esc(label)}">
       <span class="eyebrow-free">${session.flipped ? "Answer" : "Prompt"}</span>
       <span class="face">${esc(face)}</span>
@@ -334,7 +348,7 @@ function renderCardStudy() {
 function renderCardDone() {
   const deckCards = session.ids.map((id) => allCards().find((item) => item.id === id)).filter(Boolean);
   const mastered = masteredAmong(deckCards);
-  const again = session.id === "all" ? "#/cards/all" : `#/cards/${session.lesson.lesson}`;
+  const again = session.id === "all" ? "#/cards/all" : `#/cards/${session.video.id}`;
   return `<section class="page">
     <h1>Round complete</h1>
     <p class="lede">${mastered} of ${session.ids.length} cards in this set are mastered. A card needs two “I knew it” ratings in a row.</p>
@@ -348,14 +362,14 @@ function renderCardDone() {
 function renderQuizIndex() {
   const exam = progress().exam;
   const examBest = exam.best == null ? "Not taken" : `Best ${exam.best}%${exam.passed ? " · Passed" : ""}`;
-  const rows = lessons().map((lesson) => {
-    const record = lessonRecord(lesson.lesson);
+  const rows = videos().filter((video) => video.quiz.length).map((video) => {
+    const record = videoRecord(video.id);
     const best = record.bestQuiz == null ? "Not taken" : `${record.bestQuiz}%`;
-    return `<li><a href="#/quiz/${lesson.lesson}"><span>${lesson.lesson}. ${esc(lesson.title)}</span><span class="fine">${best}${record.done ? " · Done" : ""}</span></a></li>`;
+    return `<li><a href="#/quiz/${video.id}"><span>${video.order}. ${esc(video.title)}</span><span class="fine">${best}${record.done ? " · Done" : ""}</span></a></li>`;
   }).join("");
   return `<section class="page">
     <h1>Quizzes</h1>
-    <p class="lede">Each lesson quiz shuffles its choices and explains the answer. 80% or better marks that lesson done. Your best score is the one that sticks.</p>
+    <p class="lede">Each video quiz shuffles its choices and explains the answer. 80% or better marks that video done. Your best score is the one that sticks. Watch-only videos are left off this list.</p>
     <a class="up-next" href="#/quiz/exam">
       <span><strong>Final exam</strong><span class="sum">20 random questions from the whole course. ${esc(examBest)}. 80% passes the exam.</span></span>
       <span class="btn-face">Start exam</span>
@@ -371,7 +385,7 @@ function renderQuiz() {
   const correctSoFar = session.items.filter((entry) => entry.picked != null && entry.options[entry.picked]?.correct).length;
   const crumb = session.mode === "exam"
     ? `<a href="#/quiz">All quizzes</a> · Final exam`
-    : `<a href="#/quiz">All quizzes</a> · Lesson ${session.lesson.lesson}`;
+    : `<a href="#/quiz">All quizzes</a> · ${esc(session.video.title)}`;
   const heading = esc(item.question.question);
   const choices = item.options.map((option, index) => {
     const locked = item.picked != null;
@@ -410,23 +424,23 @@ function quizFeedback(item) {
 function renderQuizResult() {
   const result = commitQuiz();
   const exam = session.mode === "exam";
-  const heading = exam ? "Exam result" : `Lesson ${session.lesson.lesson} result`;
+  const heading = exam ? "Exam result" : "Quiz result";
   let outcome;
   if (exam) {
     outcome = result.pass
       ? "80% or better passes the exam."
       : `80% passes the exam. This round is ${result.pct}%.`;
   } else if (result.pass && result.newlyDone) {
-    outcome = "80% or better marks this lesson done. It is marked done now.";
+    outcome = "80% or better marks this video done. It is marked done now.";
   } else if (result.pass) {
-    outcome = "80% or better. This lesson stays marked done.";
+    outcome = "80% or better. This video stays marked done.";
   } else {
-    outcome = `80% marks the lesson done. This round is ${result.pct}%.`;
+    outcome = `80% marks the video done. This round is ${result.pct}%.`;
   }
   const review = exam
     ? `<a class="btn" href="#/cards/all">Review weakest cards</a>`
-    : `<a class="btn" href="#/cards/${session.lesson.lesson}">Review these cards</a>`;
-  const retry = exam ? "#/quiz/exam" : `#/quiz/${session.lesson.lesson}`;
+    : `<a class="btn" href="#/cards/${session.video.id}">Review these cards</a>`;
+  const retry = exam ? "#/quiz/exam" : `#/quiz/${session.video.id}`;
   return `<section class="page">
     <h1>${heading}</h1>
     <p class="lede">${result.pct}% this round. Best is ${result.best}%. ${outcome}</p>
@@ -440,9 +454,9 @@ function renderQuizResult() {
 }
 
 function attemptLine(exam) {
-  const attempts = exam ? progress().exam.attempts : lessonRecord(session.lesson.lesson).attempts;
+  const attempts = exam ? progress().exam.attempts : videoRecord(session.video.id).attempts;
   const noun = attempts === 1 ? "time" : "times";
-  return exam ? `Taken ${attempts} ${noun}.` : `Taken ${attempts} ${noun} for this lesson.`;
+  return exam ? `Taken ${attempts} ${noun}.` : `Taken ${attempts} ${noun} for this video.`;
 }
 
 function commitQuiz() {
@@ -450,7 +464,7 @@ function commitQuiz() {
   const correct = session.items.filter((item) => item.options[item.picked]?.correct).length;
   session.result = session.mode === "exam"
     ? recordExam(correct, session.items.length)
-    : recordQuiz(session.lesson.lesson, correct, session.items.length);
+    : recordQuiz(session.video.id, correct, session.items.length);
   announce(`${session.result.pct} percent. ${session.result.pass ? "Passed." : "Below 80 percent."}`);
   return session.result;
 }
@@ -462,7 +476,7 @@ function renderGameIndex() {
     <p class="lede">Four short rounds made only from the course cards, quizzes, and GConf scenarios.</p>
     <ol class="game-list">
       ${gameRow("match", "Match the meaning", "Pair each term with its meaning. The clock runs and every miss counts.", games.match, "Best score")}
-      ${gameRow("which", "Which lesson is this?", "A card appears. Pick the lesson it comes from. You have 60 seconds.", games.which, "Best correct")}
+      ${gameRow("which", "Which video is this?", "A card appears. Pick the video it comes from. You have 60 seconds.", games.which, "Best correct")}
       ${gameRow("scenarios", "GConf scenarios", "Twenty GConf situations from the course. Pick the move that solves each one.", games.scenarios, "Best correct")}
       ${gameRow("swap", "Straight or swapped", "A term and a meaning appear. Say whether the meaning belongs to that term. 45 seconds.", games.swap, "Best correct")}
     </ol>
@@ -550,8 +564,8 @@ function renderMatchDone() {
 function renderWhich() {
   if (session.phase === "ready") {
     return readyScreen(
-      "Which lesson is this?",
-      "You get 60 seconds. Each card is from one lesson. Four lesson titles, one of them right. Wrong answers just move you on.",
+      "Which video is this?",
+      "You get 60 seconds. Each card is from one video. Four video titles, one of them right. Wrong answers just move you on.",
       "start-which",
     );
   }
@@ -566,14 +580,14 @@ function renderWhich() {
       </div>
     </section>`;
   }
-  const choices = session.current.choices.map((lesson) => `<button type="button" class="choice" data-action="answer-which" data-lesson="${lesson.lesson}"><span>${lesson.lesson}. ${esc(lesson.title)}</span></button>`).join("");
+  const choices = session.current.choices.map((video) => `<button type="button" class="choice" data-action="answer-which" data-video="${video.id}"><span>${video.order}. ${esc(video.title)}</span></button>`).join("");
   return `<section class="page">
     <div class="hud">
       <a href="#/play">Games</a>
       <p class="big-clock" data-clock>${clock(whichLeft())}</p>
       <p>Correct <span>${session.correct}</span></p>
     </div>
-    <h1>Which lesson is this?</h1>
+    <h1>Which video is this?</h1>
     <div class="prompt" id="prompt" tabindex="-1">
       <p class="face">${esc(session.current.card.front)}</p>
       <p>${esc(session.current.card.back)}</p>
@@ -586,7 +600,7 @@ function renderScenarios() {
   if (session.phase === "ready") {
     return readyScreen(
       "GConf scenarios",
-      `${TOTAL.scenarios} situations from the course, in a shuffled round. Pick the move that solves the problem. Each one names its lesson after you answer.`,
+      `${TOTAL.scenarios} situations from the course, in a shuffled round. Pick the move that solves the problem. Each one names its video after you answer.`,
       "start-scenarios",
     );
   }
@@ -602,7 +616,7 @@ function renderScenarios() {
     </section>`;
   }
   const item = session.items[session.index];
-  const lesson = lessonByNumber(item.scenario.lesson);
+  const video = videoById(item.scenario.video);
   const choices = item.options.map((option, index) => {
     const locked = item.picked != null;
     let cls = "choice";
@@ -618,7 +632,7 @@ function renderScenarios() {
   }).join("");
   const feedback = item.picked == null ? "" : `<div class="feedback" tabindex="-1">
       <p><strong>${item.options[item.picked].correct ? "Correct." : "Not quite."}</strong> ${esc(item.scenario.why)}</p>
-      <p><a href="#/lessons/${lesson.lesson}">Lesson ${lesson.lesson}. ${esc(lesson.title)}</a></p>
+      <p><a href="#/videos/${video.id}">${video.order}. ${esc(video.title)}</a></p>
       <button type="button" class="btn primary" data-action="next-scenario">${session.index + 1 >= session.items.length ? "See result" : "Next situation"}</button>
     </div>`;
   return `<section class="page">
@@ -672,21 +686,23 @@ function renderProgress() {
   const today = localISODate();
   const streak = effectiveStreak(data, today);
   const mastered = allCards().filter((card) => cardRecord(card.id).mastered).length;
-  const done = lessons().filter((lesson) => lessonRecord(lesson.lesson).done).length;
+  const done = videos().filter((video) => videoRecord(video.id).done).length;
   const alive = data.lastStudyDate === prevDayLabel(today);
   const streakNote = streak === 0
     ? "No streak yet. Any study today starts one."
     : alive
       ? `Study today to keep the ${streak}-day streak.`
       : `${streak}-day streak, counted on this device’s calendar.`;
-  const rows = lessons().map((lesson) => {
-    const record = lessonRecord(lesson.lesson);
-    const cards = cardsForLesson(lesson.lesson);
-    const best = record.bestQuiz == null ? "—" : `${record.bestQuiz}%`;
+  const rows = videos().map((video) => {
+    const record = videoRecord(video.id);
+    const cards = cardsForVideo(video.id);
+    const best = video.quiz.length ? (record.bestQuiz == null ? "—" : `${record.bestQuiz}%`) : "—";
+    const cardCell = cards.length ? `${masteredAmong(cards)}/${cards.length}` : "—";
+    const status = video.watchOnly ? (record.done ? "Watched" : "Watch only") : (record.done ? "Done" : "Open");
     return `<tr>
-      <th scope="row"><a href="#/lessons/${lesson.lesson}">${lesson.lesson}. ${esc(lesson.title)}</a></th>
-      <td>${record.done ? "Done" : "Open"}</td>
-      <td>${masteredAmong(cards)}/${cards.length}</td>
+      <th scope="row"><a href="#/videos/${video.id}">${video.order}. ${esc(video.title)}</a></th>
+      <td>${status}</td>
+      <td>${cardCell}</td>
       <td>${best}</td>
     </tr>`;
   }).join("");
@@ -696,21 +712,22 @@ function renderProgress() {
   const saveNote = warning();
   return `<section class="page">
     <h1>Progress</h1>
-    <p class="lede">Level ${level.level}. ${data.xp.toLocaleString()} XP, ${level.remaining} to level ${level.level + 1}. ${streak ? `${streak}-day streak.` : "No streak yet."} ${mastered} ${mastered === 1 ? "card" : "cards"} mastered. ${done} of ${TOTAL.lessons} lessons done.</p>
+    <p class="lede">Level ${level.level}. ${data.xp.toLocaleString()} XP, ${level.remaining} to level ${level.level + 1}. ${streak ? `${streak}-day streak.` : "No streak yet."} ${mastered} ${mastered === 1 ? "card" : "cards"} mastered. ${done} of ${TOTAL.videos} videos done.</p>
     <progress value="${level.into}" max="${level.span}">${level.into} of ${level.span} XP toward the next level</progress>
     <p class="fine">${streakNote}</p>
+    ${data.migrationNote ? `<p class="note" role="status">${esc(data.migrationNote)}</p>` : ""}
     ${saveNote ? `<p class="alert" role="alert">${esc(saveNote)}</p>` : ""}
     <div class="table-wrap">
       <table>
-        <caption>Progress by lesson</caption>
-        <thead><tr><th scope="col">Lesson</th><th scope="col">Status</th><th scope="col">Cards</th><th scope="col">Best quiz</th></tr></thead>
+        <caption>Progress by video</caption>
+        <thead><tr><th scope="col">Video</th><th scope="col">Status</th><th scope="col">Cards</th><th scope="col">Best quiz</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>
     </div>
     <h2>Game bests</h2>
     <ul class="plain-list bests">
       <li><span>Match the meaning</span><span>${games.match.plays ? games.match.best : "—"}</span></li>
-      <li><span>Which lesson is this?</span><span>${games.which.plays ? games.which.best : "—"}</span></li>
+      <li><span>Which video is this?</span><span>${games.which.plays ? games.which.best : "—"}</span></li>
       <li><span>GConf scenarios</span><span>${games.scenarios.plays ? `${games.scenarios.best} of ${TOTAL.scenarios}` : "—"}</span></li>
       <li><span>Straight or swapped</span><span>${games.swap.plays ? games.swap.best : "—"}</span></li>
     </ul>
@@ -732,14 +749,14 @@ function renderProgress() {
     <h2>Install</h2>
     <button type="button" class="btn" data-action="install" hidden>Install app</button>
     <p id="install-status" role="status"></p>
-    <p>On iPhone, open Share and tap Add to Home Screen. After one online visit, lessons, cards, quizzes, and games open offline. Videos still need a connection.</p>
+    <p>On iPhone, open Share and tap Add to Home Screen. After one online visit, videos, cards, quizzes, and games open offline. Playback still needs a connection.</p>
     <h2>How XP works</h2>
     <details>
       <summary>Scoring rules for this trainer</summary>
       <ul class="concepts">
         <li>Knowing a new card is 8 XP. The rating that masters it is 28 XP. Later reviews of a mastered card do not add XP.</li>
         <li>Again clears the two-in-a-row run and adds no XP.</li>
-        <li>Quizzes add 1 XP per percentage point you improve on your best. The exam adds 2. The first time a lesson is marked done is 40 XP. The first exam pass is 100 XP.</li>
+        <li>Quizzes add 1 XP per percentage point you improve on your best. The exam adds 2. The first time a video is marked done is 40 XP. The first exam pass is 100 XP.</li>
         <li>Games add XP only when the score beats your best.</li>
         <li>The first study action of a local day adds 15 XP and keeps the streak.</li>
       </ul>
@@ -886,8 +903,8 @@ function finishMatch() {
 function nextWhich() {
   const cards = allCards();
   const card = cards[Math.floor(Math.random() * cards.length)];
-  const correct = lessonByNumber(card.lesson);
-  const distractors = shuffle(lessons().filter((lesson) => lesson.lesson !== card.lesson)).slice(0, 3);
+  const correct = videoById(card.video);
+  const distractors = shuffle(studyVideos().filter((video) => video.id !== card.video)).slice(0, 3);
   return { card, choices: shuffle([correct, ...distractors]) };
 }
 
@@ -1034,30 +1051,35 @@ async function importFile(file) {
 
 const handlers = {
   filter(element) {
-    lessonFilter = element.dataset.filter;
-    rerender({ focus: `[data-filter="${lessonFilter}"]` });
+    videoFilter = element.dataset.filter;
+    rerender({ focus: `[data-filter="${videoFilter}"]` });
+  },
+  seek(element) {
+    const seconds = Number(element.dataset.seconds);
+    if (!Number.isFinite(seconds)) return;
+    seekSeconds = Math.max(0, Math.floor(seconds));
+    rerender({ focus: ".frame" });
   },
   "toggle-done"(element) {
-    const number = Number(element.dataset.lesson);
-    const result = toggleLesson(number);
-    element.textContent = result.done ? "Mark as not done" : "Mark lesson done";
-    const note = document.querySelector("[data-done-note]");
-    const lesson = lessonByNumber(number);
-    const record = lessonRecord(number);
-    const mastered = masteredAmong(cardsForLesson(number));
-    const best = record.bestQuiz == null ? "No quiz yet" : `Best quiz ${record.bestQuiz}%`;
-    if (note && lesson) {
-      note.textContent = `${result.done ? "Marked done." : "Not done yet."} ${best}. Cards mastered ${mastered} of ${lesson.flashcards.length}.`;
-    }
-    announce(result.done ? `Lesson ${number} marked done.` : `Lesson ${number} marked not done.`);
-    updateChrome();
-  },
-  "play-video"(element) {
-    const lesson = Number(element.dataset.lesson);
     const id = element.dataset.video;
-    if (!safeVideoId(id)) return;
-    activeVideo = activeVideo?.id === id && activeVideo.lesson === lesson ? null : { lesson, id };
-    rerender({ focus: `[data-video="${id}"]` });
+    const video = videoById(id);
+    if (!video) return;
+    const result = toggleVideo(id);
+    element.textContent = video.watchOnly
+      ? (result.done ? "Mark as not watched" : "Mark watched")
+      : (result.done ? "Mark as not done" : "Mark video done");
+    const note = document.querySelector("[data-done-note]");
+    const record = videoRecord(id);
+    const mastered = masteredAmong(cardsForVideo(id));
+    const best = video.watchOnly
+      ? "No quiz on a watch-only video."
+      : (record.bestQuiz == null ? "No quiz yet" : `Best quiz ${record.bestQuiz}%`);
+    if (note) {
+      const cards = video.flashcards.length ? ` Cards mastered ${mastered} of ${video.flashcards.length}.` : "";
+      note.textContent = `${result.done ? "Marked done." : "Not done yet."} ${best}${cards} ${video.duration}.`;
+    }
+    announce(result.done ? `${video.title} marked done.` : `${video.title} marked not done.`);
+    updateChrome();
   },
   flip() {
     flipCard();
@@ -1088,8 +1110,8 @@ const handlers = {
   },
   "answer-which"(element) {
     if (!session || session.phase !== "play") return;
-    const lesson = Number(element.dataset.lesson);
-    if (lesson === session.current.card.lesson) session.correct += 1;
+    const id = element.dataset.video;
+    if (id === session.current.card.video) session.correct += 1;
     session.current = nextWhich();
     rerender({ focus: "#prompt" });
   },
@@ -1181,7 +1203,7 @@ const handlers = {
   async reset() {
     const ok = await askConfirm({
       title: "Reset progress on this device?",
-      body: "XP, the streak, mastered cards, lesson status, quiz scores, and game bests will be cleared. This cannot be undone unless you already exported a file.",
+      body: "XP, the streak, mastered cards, video status, quiz scores, and game bests will be cleared. This cannot be undone unless you already exported a file.",
       confirmLabel: "Reset progress",
     });
     if (!ok) return;

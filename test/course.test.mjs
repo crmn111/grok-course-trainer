@@ -4,40 +4,74 @@ import test from "node:test";
 
 const course = JSON.parse(readFileSync(new URL("../src/course.json", import.meta.url), "utf8"));
 
-test("course file has the full Grok lesson set", () => {
-  assert.equal(course.lessons.length, 23);
+const WATCH_ONLY = ["pS6_5PNS8qs", "ffNQGX6gXaU", "OvBayqdwUag", "3gNg7NdoPIk"];
+
+function durationSeconds(duration) {
+  const [minutes, seconds] = duration.split(":").map(Number);
+  return minutes * 60 + seconds;
+}
+
+test("course file has one study unit per channel video", () => {
+  assert.equal(course.videos.length, 24);
   assert.equal(course.scenarios.length, 20);
-  const cards = course.lessons.reduce((sum, lesson) => sum + lesson.flashcards.length, 0);
-  const questions = course.lessons.reduce((sum, lesson) => sum + lesson.quiz.length, 0);
-  assert.equal(cards, 226);
-  assert.equal(questions, 138);
-  const numbers = course.lessons.map((lesson) => lesson.lesson);
-  assert.deepEqual(numbers, Array.from({ length: 23 }, (_, index) => index + 1));
+  const ids = course.videos.map((video) => video.id);
+  assert.equal(new Set(ids).size, 24);
+  assert.deepEqual(course.videos.map((video) => video.order), Array.from({ length: 24 }, (_, index) => index + 1));
+  assert.equal(course.videos[0].id, "F1_0Lkp16Rc");
+  assert.equal(course.videos.at(-1).id, "3gNg7NdoPIk");
+  assert.deepEqual(
+    course.videos.filter((video) => video.watchOnly).map((video) => video.id),
+    WATCH_ONLY,
+  );
 });
 
-test("every lesson points at known videos and complete study items", () => {
-  for (const lesson of course.lessons) {
-    assert.ok(lesson.title && lesson.summary && lesson.concepts.length);
-    assert.ok(lesson.videos.length);
-    for (const id of lesson.videos) {
-      assert.ok(course.videos[id], `missing video ${id}`);
-      assert.match(id, /^[A-Za-z0-9_-]{6,20}$/);
-      assert.ok(course.videos[id].url.includes(id));
+test("each video has catalog timing and a complete study set", () => {
+  for (const video of course.videos) {
+    assert.match(video.id, /^[A-Za-z0-9_-]{6,20}$/);
+    assert.equal(video.url, `https://www.youtube.com/watch?v=${video.id}`);
+    assert.equal(video.lengthSeconds, durationSeconds(video.duration));
+    assert.ok(video.title && video.summary);
+    if (video.watchOnly) {
+      assert.equal(video.flashcards.length, 0);
+      assert.equal(video.quiz.length, 0);
+      assert.equal(video.chapters.length, 0);
+      continue;
     }
-    for (const card of lesson.flashcards) {
-      assert.equal(typeof card.front, "string");
-      assert.equal(typeof card.back, "string");
-      assert.ok(card.front.length && card.back.length);
+    assert.ok(video.concepts.length);
+    const substantial = video.lengthSeconds >= 600;
+    if (substantial) {
+      assert.ok(video.flashcards.length >= 8 && video.flashcards.length <= 12, video.id);
+      assert.ok(video.quiz.length >= 5, video.id);
+    } else {
+      assert.ok(video.flashcards.length >= 2 && video.flashcards.length <= 12, video.id);
+      assert.ok(video.quiz.length >= 2, video.id);
+      assert.equal(video.chapters.length, 0);
     }
-    for (const question of lesson.quiz) {
+    if (video.lengthSeconds >= 1700) assert.ok(video.chapters.length >= 3, video.id);
+    let previous = -1;
+    for (const chapter of video.chapters) {
+      assert.ok(chapter.title && chapter.concepts.length);
+      assert.ok(chapter.seconds > previous);
+      assert.ok(chapter.seconds < video.lengthSeconds);
+      previous = chapter.seconds;
+    }
+    for (const card of video.flashcards) assert.ok(card.front && card.back);
+    for (const question of video.quiz) {
       assert.ok(question.question && question.correct && question.why);
       assert.ok(Array.isArray(question.wrong) && question.wrong.length >= 1);
       assert.ok(!question.wrong.includes(question.correct));
     }
   }
+});
+
+test("scenarios point at a video that can be studied", () => {
+  const videos = Object.fromEntries(course.videos.map((video) => [video.id, video]));
   for (const scenario of course.scenarios) {
-    assert.ok(course.lessons.some((lesson) => lesson.lesson === scenario.lesson));
+    const video = videos[scenario.video];
+    assert.ok(video, scenario.video);
+    assert.equal(video.watchOnly, false);
     assert.ok(scenario.situation && scenario.correct && scenario.why);
     assert.equal(scenario.wrong.length, 2);
+    assert.ok(!scenario.wrong.includes(scenario.correct));
   }
 });

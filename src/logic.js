@@ -97,7 +97,9 @@ export function weakestFirst(cards, limit) {
     .sort((a, b) => {
       const delta = weakness(a.state) - weakness(b.state);
       if (delta) return delta;
-      if (a.lesson !== b.lesson) return a.lesson - b.lesson;
+      const orderA = a.order ?? a.lesson ?? 0;
+      const orderB = b.order ?? b.lesson ?? 0;
+      if (orderA !== orderB) return orderA - orderB;
       return a.index - b.index;
     })
     .slice(0, limit);
@@ -140,13 +142,31 @@ function clampInt(value, min, max, fallback) {
   return Math.min(max, Math.max(min, Math.round(value)));
 }
 
+const VIDEO_ID = /^[A-Za-z0-9_-]{6,20}$/;
+const CARD_ID = /^[A-Za-z0-9_-]{6,20}-\d{1,3}$/;
+
+// Lessons that were already one video, with the same card order, can move across.
+export const LEGACY_LESSON_VIDEO = {
+  5: "i-7F2EpQOhc",
+  6: "lQB3kZZZYss",
+  7: "NhrXdX_93Hc",
+  8: "FNQkRPR4h2Y",
+  15: "VSaeKaC2Tck",
+  16: "zupqr-rApp4",
+  17: "FFOZAl7wihE",
+  18: "jcKcAfJtTlk",
+  19: "AdxoMFFmTE0",
+  20: "91J3eaBH6no",
+  21: "rcwwIEmfcjk",
+};
+
 export function freshProgress() {
   return {
-    version: 1,
+    version: 2,
     xp: 0,
     streak: 0,
     lastStudyDate: null,
-    lessons: {},
+    videos: {},
     cards: {},
     exam: { best: null, attempts: 0, passed: false, rewarded: false },
     games: {
@@ -155,6 +175,26 @@ export function freshProgress() {
       scenarios: { best: 0, plays: 0 },
       swap: { best: 0, plays: 0 },
     },
+    migrationNote: "",
+  };
+}
+
+function videoRecord(value) {
+  const best = value?.bestQuiz;
+  return {
+    done: Boolean(value?.done),
+    bestQuiz: typeof best === "number" && Number.isFinite(best) ? clampInt(best, 0, 100, 0) : null,
+    attempts: clampInt(value?.attempts, 0, 100_000, 0),
+    rewarded: Boolean(value?.rewarded),
+  };
+}
+
+function cardRecord(value) {
+  const knows = clampInt(value?.knows, 0, 2, 0);
+  return {
+    knows,
+    lapses: clampInt(value?.lapses, 0, 100_000, 0),
+    mastered: Boolean(value?.mastered) && knows >= 2,
   };
 }
 
@@ -176,29 +216,43 @@ export function sanitizeProgress(input) {
     ? src.lastStudyDate
     : null;
 
-  if (src.lessons && typeof src.lessons === "object") {
+  const legacy = src.lessons && typeof src.lessons === "object" && !src.videos;
+  if (src.videos && typeof src.videos === "object") {
+    for (const [key, value] of Object.entries(src.videos)) {
+      if (!VIDEO_ID.test(key) || !value || typeof value !== "object") continue;
+      next.videos[key] = videoRecord(value);
+    }
+  } else if (legacy) {
     for (const [key, value] of Object.entries(src.lessons)) {
       if (!/^\d{1,3}$/.test(key) || !value || typeof value !== "object") continue;
-      const best = value.bestQuiz;
-      next.lessons[key] = {
-        done: Boolean(value.done),
-        bestQuiz: typeof best === "number" && Number.isFinite(best) ? clampInt(best, 0, 100, 0) : null,
-        attempts: clampInt(value.attempts, 0, 100_000, 0),
-        rewarded: Boolean(value.rewarded),
-      };
+      const videoId = LEGACY_LESSON_VIDEO[Number(key)];
+      if (!videoId) continue;
+      next.videos[videoId] = videoRecord(value);
     }
   }
 
   if (src.cards && typeof src.cards === "object") {
     for (const [key, value] of Object.entries(src.cards)) {
-      if (!/^\d{1,3}-\d{1,3}$/.test(key) || !value || typeof value !== "object") continue;
-      const knows = clampInt(value.knows, 0, 2, 0);
-      next.cards[key] = {
-        knows,
-        lapses: clampInt(value.lapses, 0, 100_000, 0),
-        mastered: Boolean(value.mastered) && knows >= 2,
-      };
+      if (!value || typeof value !== "object") continue;
+      if (CARD_ID.test(key) && !/^\d{1,3}-\d{1,3}$/.test(key)) {
+        next.cards[key] = cardRecord(value);
+        continue;
+      }
+      const old = /^(\d{1,3})-(\d{1,3})$/.exec(key);
+      if (!old) continue;
+      if (legacy) {
+        const videoId = LEGACY_LESSON_VIDEO[Number(old[1])];
+        if (!videoId) continue;
+        next.cards[`${videoId}-${old[2]}`] = cardRecord(value);
+      }
     }
+  }
+
+  next.migrationNote = typeof src.migrationNote === "string"
+    ? src.migrationNote.slice(0, 500)
+    : "";
+  if (legacy) {
+    next.migrationNote = "Saved lesson progress moved onto the videos that used to be a single lesson, including those cards. Webinars that were split into several lessons started fresh, so one old chapter is not marked done for the whole video.";
   }
 
   const exam = src.exam && typeof src.exam === "object" ? src.exam : {};

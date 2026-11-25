@@ -14,17 +14,18 @@ const view = document.getElementById("view");
 let route = { section: "", id: null };
 
 function parseRoute() {
-  const parts = (location.hash.replace(/^#/, "") || "/lessons").split("/").filter(Boolean);
-  return { section: parts[0] || "lessons", id: parts[1] || null };
+  const raw = (location.hash.replace(/^#/, "") || "/videos").replace(/^\/lessons/, "/videos");
+  const parts = raw.split("/").filter(Boolean);
+  return { section: parts[0] || "videos", id: parts[1] || null };
 }
 
 function show(options = {}, routeChanged = false) {
   view.innerHTML = render(route);
   afterPaint(view);
   updateChrome();
-  const section = route.section === "lessons" || route.section === "cards" || route.section === "quiz" || route.section === "play" || route.section === "progress"
+  const section = route.section === "videos" || route.section === "cards" || route.section === "quiz" || route.section === "play" || route.section === "progress"
     ? route.section
-    : "lessons";
+    : "videos";
   document.querySelectorAll("[data-nav]").forEach((link) => {
     if (link.dataset.nav === section) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
@@ -70,7 +71,7 @@ view.addEventListener("change", (event) => {
 });
 
 view.addEventListener("error", (event) => {
-  if (event.target instanceof HTMLImageElement) event.target.closest(".video")?.classList.add("no-thumb");
+  if (event.target instanceof HTMLImageElement) event.target.closest(".video, .tile")?.classList.add("no-thumb");
 }, true);
 
 window.addEventListener("hashchange", sync);
