@@ -18,11 +18,13 @@ let saveWarning = "";
 function load() {
   try {
     const raw = localStorage.getItem(PROGRESS_KEY);
-    if (!raw) return freshProgress();
-    return sanitizeProgress(JSON.parse(raw));
+    if (!raw) return { progress: freshProgress(), migrated: false };
+    const parsed = JSON.parse(raw);
+    const migrated = Boolean(parsed && parsed.lessons && !parsed.videos);
+    return { progress: sanitizeProgress(parsed), migrated };
   } catch {
     saveWarning = "Saved progress on this device could not be read. You can import a backup file.";
-    return freshProgress();
+    return { progress: freshProgress(), migrated: false };
   }
 }
 
@@ -43,16 +45,17 @@ function noteStudy() {
   return day.xpGained;
 }
 
-function lessonState(lessonNumber) {
-  const key = String(lessonNumber);
-  if (!progress.lessons[key]) {
-    progress.lessons[key] = { done: false, bestQuiz: null, attempts: 0, rewarded: false };
+function videoState(videoId) {
+  if (!progress.videos[videoId]) {
+    progress.videos[videoId] = { done: false, bestQuiz: null, attempts: 0, rewarded: false };
   }
-  return progress.lessons[key];
+  return progress.videos[videoId];
 }
 
 export function init() {
-  progress = load();
+  const loaded = load();
+  progress = loaded.progress;
+  if (loaded.migrated) save();
 }
 
 export function get() {
@@ -72,41 +75,41 @@ export function rate(id, rating) {
   return { ...rated, xpGained: rated.xp + day };
 }
 
-export function toggleLesson(lessonNumber) {
-  const lesson = lessonState(lessonNumber);
-  lesson.done = !lesson.done;
+export function toggleVideo(videoId) {
+  const video = videoState(videoId);
+  video.done = !video.done;
   let bonus = 0;
-  if (lesson.done && !lesson.rewarded) {
+  if (video.done && !video.rewarded) {
     bonus = 40;
-    lesson.rewarded = true;
+    video.rewarded = true;
     progress.xp += bonus;
   }
   const day = noteStudy();
   save();
-  return { done: lesson.done, xpGained: bonus + day };
+  return { done: video.done, xpGained: bonus + day };
 }
 
-export function recordQuiz(lessonNumber, correct, total) {
-  const lesson = lessonState(lessonNumber);
+export function recordQuiz(videoId, correct, total) {
+  const video = videoState(videoId);
   const pct = percent(correct, total);
   let xp = 0;
-  if (lesson.bestQuiz == null || pct > lesson.bestQuiz) {
-    const base = lesson.bestQuiz == null ? 0 : lesson.bestQuiz;
+  if (video.bestQuiz == null || pct > video.bestQuiz) {
+    const base = video.bestQuiz == null ? 0 : video.bestQuiz;
     xp += pct - base;
-    lesson.bestQuiz = pct;
+    video.bestQuiz = pct;
   }
-  lesson.attempts += 1;
+  video.attempts += 1;
   const pass = passed(correct, total);
-  const newlyDone = Boolean(pass && !lesson.done);
-  if (pass) lesson.done = true;
-  if (lesson.done && !lesson.rewarded) {
+  const newlyDone = Boolean(pass && !video.done);
+  if (pass) video.done = true;
+  if (video.done && !video.rewarded) {
     xp += 40;
-    lesson.rewarded = true;
+    video.rewarded = true;
   }
   const day = noteStudy();
   progress.xp += xp;
   save();
-  return { pct, best: lesson.bestQuiz, pass, newlyDone, xpGained: xp + day, attempts: lesson.attempts };
+  return { pct, best: video.bestQuiz, pass, newlyDone, xpGained: xp + day, attempts: video.attempts };
 }
 
 export function recordExam(correct, total) {
@@ -145,7 +148,7 @@ export function recordGame(name, score) {
 export function exportPayload() {
   return {
     app: "grok-course-trainer",
-    version: 1,
+    version: 2,
     exportedAt: new Date().toISOString(),
     progress,
   };

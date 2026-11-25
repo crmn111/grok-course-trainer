@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Grok Course Trainer",
   "short_name": "Grok course",
-  "description": "Lessons, flashcards, quizzes, and games from the Grok YouTube channel.",
+  "description": "Videos, flashcards, quizzes, and games from the Grok YouTube channel.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -30,7 +30,7 @@
     }
   ],
   "shortcuts": [
-    { "name": "Lessons", "url": "./#/lessons" },
+    { "name": "Videos", "url": "./#/videos" },
     { "name": "Flashcards", "url": "./#/cards" },
     { "name": "Quizzes", "url": "./#/quiz" },
     { "name": "Games", "url": "./#/play" }

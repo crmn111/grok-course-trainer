@@ -90,7 +90,7 @@ test("streak survives until the local day is missed", () => {
   assert.equal(applyStudyDay(progress, today).xpGained, 0);
 });
 
-test("import keeps a trainer export and rejects anything else", () => {
+test("import keeps a trainer export and moves one-video lessons onto those videos", () => {
   const clean = sanitizeProgress({
     app: "grok-course-trainer",
     progress: {
@@ -98,19 +98,42 @@ test("import keeps a trainer export and rejects anything else", () => {
       xp: 42.2,
       streak: 3,
       lastStudyDate: "2026-11-25",
-      lessons: { 4: { done: true, bestQuiz: 80, attempts: 1, rewarded: true }, bad: { done: true } },
-      cards: { "4-0": { knows: 2, lapses: 1, mastered: true }, "nope": { knows: 1 } },
+      lessons: {
+        4: { done: true, bestQuiz: 80, attempts: 1, rewarded: true },
+        5: { done: true, bestQuiz: 90, attempts: 2, rewarded: true },
+        bad: { done: true },
+      },
+      cards: {
+        "4-0": { knows: 2, lapses: 1, mastered: true },
+        "5-1": { knows: 2, lapses: 0, mastered: true },
+        nope: { knows: 1 },
+      },
       exam: { best: 90, attempts: 1, passed: true, rewarded: true },
       games: { match: { best: 500, plays: 2 } },
     },
   });
   assert.equal(clean.xp, 42);
-  assert.equal(clean.lessons["4"].bestQuiz, 80);
-  assert.equal(clean.lessons.bad, undefined);
-  assert.equal(clean.cards["4-0"].mastered, true);
+  assert.equal(clean.videos["i-7F2EpQOhc"].bestQuiz, 90);
+  assert.equal(clean.videos["i-7F2EpQOhc"].done, true);
+  assert.equal(clean.videos.CODaDnHwe2M, undefined);
+  assert.equal(clean.cards["i-7F2EpQOhc-1"].mastered, true);
+  assert.equal(clean.cards["4-0"], undefined);
   assert.equal(clean.cards.nope, undefined);
   assert.equal(clean.games.match.best, 500);
   assert.equal(clean.games.which.best, 0);
+  assert.match(clean.migrationNote, /single lesson/);
+  const current = sanitizeProgress({
+    app: "grok-course-trainer",
+    progress: {
+      version: 2,
+      xp: 10,
+      videos: { lQB3kZZZYss: { done: true, bestQuiz: 100, attempts: 1, rewarded: true } },
+      cards: { "lQB3kZZZYss-0": { knows: 2, lapses: 0, mastered: true } },
+    },
+  });
+  assert.equal(current.videos.lQB3kZZZYss.bestQuiz, 100);
+  assert.equal(current.cards["lQB3kZZZYss-0"].mastered, true);
+  assert.equal(current.migrationNote, "");
   assert.throws(() => sanitizeProgress({ app: "other", progress: { xp: 1 } }), /not a Grok course/);
   assert.throws(() => sanitizeProgress({ progress: {} }), /no usable XP/);
 });
